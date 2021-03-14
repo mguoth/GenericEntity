@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GenericEntity.Abstractions\GenericEntity.Abstractions.csproj" />
+    <ProjectReference Include="..\GenericEntity.Extensions\GenericEntity.Extensions.csproj" />
+    <ProjectReference Include="..\GenericEntity.Model\GenericEntity.Model.csproj" />
+  </ItemGroup>
+
+</Project>

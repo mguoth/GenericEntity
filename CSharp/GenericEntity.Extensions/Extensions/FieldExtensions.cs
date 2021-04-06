@@ -27,17 +27,17 @@ namespace GenericEntity.Extensions
             return field.Set<int>();
         }
 
-        private static IGetter<T> Get<T>(this IField field)
+        public static IGetter<T> Get<T>(this IField field)
         {
-            IGetter<T> getter = field as IGetter<T>;
-            if (getter != null)
+            IGetter<T> genericGetter = field as IGetter<T>;
+            if (genericGetter != null)
             {
-                return getter;
-            }
+                return genericGetter;
+            }           
             return new NotSupportedGetter<T>(field);
         }
 
-        private static ISetter<T> Set<T>(this IField field)
+        public static ISetter<T> Set<T>(this IField field)
         {
             ISetter<T> setter = field as ISetter<T>;
             if (setter != null)

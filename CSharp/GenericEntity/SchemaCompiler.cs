@@ -1,5 +1,5 @@
 ﻿using GenericEntity.Abstractions;
-using GenericEntity.Model;
+using SchemaModel = Schema.Model;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -26,7 +26,7 @@ namespace GenericEntity
 
         public Schema Compile(string schemaName)
         {
-            SchemaDefinition schemaDefinition = this.schemaRepository.GetSchema(schemaName);
+            SchemaModel.SchemaDefinition schemaDefinition = this.schemaRepository.GetSchema(schemaName);
 
             var scannedTypes = extensionsAssemblies.ScanTypesForCustomAttributes<FieldTypeAttribute>();
 
@@ -43,7 +43,7 @@ namespace GenericEntity
             IDictionary<string, Type> fieldTypes = scannedTypes.Where(x => schemaDefinition.Fields.Select(y => y.Type).Contains(x.Attribute.FieldDefinitionType))
                                                                .ToDictionary(x => x.Attribute.FieldDefinitionType, y => y.Type);
 
-            foreach (Model.FieldDefinition fieldDefinition in schemaDefinition.Fields)
+            foreach (SchemaModel.FieldDefinition fieldDefinition in schemaDefinition.Fields)
             {
                 Type fieldType;
                 if (!fieldTypes.TryGetValue(fieldDefinition.Type, out fieldType))

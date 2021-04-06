@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using GenericEntity.Model;
+using SchemaModel = Schema.Model;
 
 namespace GenericEntity.Abstractions
 {
     public class FieldDefinition : IFieldDefinition
     {
-        private readonly Model.FieldDefinition data;
+        private readonly SchemaModel.FieldDefinition data;
 
-        public FieldDefinition(ISchema schema, Type fieldType, Model.FieldDefinition data)
+        public FieldDefinition(ISchema schema, Type fieldType, SchemaModel.FieldDefinition data)
         {
             this.Schema = schema;
             this.FieldType = fieldType;

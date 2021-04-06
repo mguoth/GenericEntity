@@ -8,9 +8,9 @@ namespace GenericEntity
 {
     public class Schema : ISchema
     {      
-        private readonly Model.SchemaDefinition data;
+        private readonly global::Schema.Model.SchemaDefinition data;
 
-        public Schema(Model.SchemaDefinition data, SchemaCompilerData compilerData)
+        public Schema(global::Schema.Model.SchemaDefinition data, SchemaCompilerData compilerData)
         {
             this.data = data;
             this.Fields = this.data.Fields.Select(x => new FieldDefinition(this, compilerData.FieldTypes[x.Type], x)).ToArray();

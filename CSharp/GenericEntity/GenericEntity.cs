@@ -16,6 +16,8 @@ namespace GenericEntity
 
         public GenericEntity(string schemaName, ISchemaRepository schemaRepository)
         {
+            this.SchemaName = schemaName;
+
             SchemaCompiler schemaCompiler = new SchemaCompiler(schemaRepository, Assembly.Load("GenericEntity.Extensions"));
 
             Schema schema;
@@ -36,6 +38,8 @@ namespace GenericEntity
 
             this.Fields = BuildFields();
         }
+
+        public string SchemaName { get; }
 
         public Schema Schema { get; }
 

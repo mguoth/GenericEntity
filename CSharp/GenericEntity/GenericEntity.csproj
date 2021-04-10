@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GenericEntity.Abstractions\GenericEntity.Abstractions.csproj" />
-    <ProjectReference Include="..\GenericEntity.Extensions\GenericEntity.Extensions.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,7 +5,7 @@ namespace GenericEntity.Abstractions
     /// <summary>
     /// Base field class
     /// </summary>
-    public abstract class Field : IField
+    public abstract class Field : IField, IRawAccess
     {
         public Field(IFieldDefinition definition)
         {
@@ -24,7 +24,7 @@ namespace GenericEntity.Abstractions
             }
         }
 
-        private object Value
+        object IRawAccess.Value
         {
             get
             {
@@ -84,7 +84,7 @@ namespace GenericEntity.Abstractions
 
         protected sealed override object GetValueInternal()
         {
-            return ((IGetter<T>) this).Value;
+            return this.Value;
         }
 
         protected sealed override void SetValueInternal(object value)

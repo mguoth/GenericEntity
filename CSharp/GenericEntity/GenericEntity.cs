@@ -47,7 +47,39 @@ namespace GenericEntity
         /// Gets fields
         /// </summary>
         public FieldCollection Fields { get; }
-        
+
+        /// <summary>
+        /// Converts from Dto.
+        /// </summary>
+        /// <param name="dto">The dto.</param>
+        /// <param name="schemaRepository">The schema repository.</param>
+        public static GenericEntity FromDto(GenericEntityDto dto, ISchemaRepository schemaRepository)
+        {
+            GenericEntity entity = new GenericEntity(dto.SchemaName, schemaRepository);
+
+            foreach (var field in dto.Fields)
+            {
+                entity.Fields[field.Key].AsRaw().Value = Convert.ChangeType(field.Value, entity.Fields[field.Key].DataType);
+            }
+
+            return entity;
+        }
+
+        /// <summary>
+        /// Converts to Dto.
+        /// </summary>
+        public GenericEntityDto ToDto()
+        {
+            GenericEntityDto dto = new GenericEntityDto();
+            dto.SchemaName = this.SchemaName;
+
+            foreach (IField field in this.Fields)
+            {
+                dto.Fields.Add(field.Definition.Name, field.AsRaw().Value);
+            }
+            return dto;
+        }
+
         private FieldCollection BuildFields()
         {
             FieldCollectionBuilder builder = new FieldCollectionBuilder();

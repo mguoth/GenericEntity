@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GenericEntity.Extensions
+namespace GenericEntity
 {
     public static class FieldExtensions
     {

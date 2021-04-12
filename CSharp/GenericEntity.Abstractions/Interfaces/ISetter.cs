@@ -8,11 +8,10 @@ namespace GenericEntity.Abstractions
     /// Field value setter interface
     /// </summary>
     /// <typeparam name="T">The field value type</typeparam>
-    public interface ISetter<T> : IGetterSetterSupported
+    public interface ISetter<T>
     {
         /// <summary>
-        /// Sets the value in case it is supported otherwise throws NotSupportedException
-        /// <exception cref="NotSupportedException"></exception>
+        /// Sets the value
         /// </summary>
         T Value { set; }
     }

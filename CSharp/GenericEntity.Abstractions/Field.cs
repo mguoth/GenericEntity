@@ -45,7 +45,7 @@ namespace GenericEntity.Abstractions
     /// Generic base field class
     /// </summary>
     /// <typeparam name="T">The field value type</typeparam>
-    public abstract class Field<T> : Field, IGetter<T>, ISetter<T>, IGetterSetterSupported
+    public abstract class Field<T> : Field, IGenericAccess<T>
     {
         public Field(IFieldDefinition definition) : base(definition)
         {
@@ -57,17 +57,12 @@ namespace GenericEntity.Abstractions
         protected T Value { get; set; }
 
         /// <inheritdoc/>
-        T IGetter<T>.Value
+        T IGenericAccess<T>.Value
         {
             get
             {
                 return this.Value;
             }
-        }
-
-        /// <inheritdoc/>
-        T ISetter<T>.Value
-        {
             set
             {
                 this.Value = value;
@@ -75,7 +70,10 @@ namespace GenericEntity.Abstractions
         }
 
         /// <inheritdoc/>
-        bool IGetterSetterSupported.IsSupported => true;
+        bool IGenericAccess<T>.IsGetSafe => true;
+
+        /// <inheritdoc/>
+        bool IGenericAccess<T>.IsSetSafe => true;
 
         protected sealed override Type GetDataTypeInternal()
         {
@@ -91,7 +89,7 @@ namespace GenericEntity.Abstractions
         {
             try
             {
-                ((ISetter<T>) this).Value = (T)value;
+                ((IGenericAccess<T>) this).Value = (T)value;
             }
             catch (InvalidCastException ex)
             {

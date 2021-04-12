@@ -39,6 +39,14 @@ namespace GenericEntity
             this.Fields = BuildFields();
         }
 
+        public GenericEntity(GenericEntityDto dto, ISchemaRepository schemaRepository) : this(dto.SchemaName, schemaRepository)
+        {
+            foreach (var field in dto.Fields)
+            {
+                this.Fields[field.Key].AsRaw().Value = Convert.ChangeType(field.Value, this.Fields[field.Key].DataType);
+            }
+        }
+
         public string SchemaName { get; }
 
         public Schema Schema { get; }
@@ -47,23 +55,6 @@ namespace GenericEntity
         /// Gets fields
         /// </summary>
         public FieldCollection Fields { get; }
-
-        /// <summary>
-        /// Converts from Dto.
-        /// </summary>
-        /// <param name="dto">The dto.</param>
-        /// <param name="schemaRepository">The schema repository.</param>
-        public static GenericEntity FromDto(GenericEntityDto dto, ISchemaRepository schemaRepository)
-        {
-            GenericEntity entity = new GenericEntity(dto.SchemaName, schemaRepository);
-
-            foreach (var field in dto.Fields)
-            {
-                entity.Fields[field.Key].AsRaw().Value = Convert.ChangeType(field.Value, entity.Fields[field.Key].DataType);
-            }
-
-            return entity;
-        }
 
         /// <summary>
         /// Converts to Dto.

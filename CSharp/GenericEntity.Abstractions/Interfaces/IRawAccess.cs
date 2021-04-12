@@ -7,7 +7,7 @@ namespace GenericEntity.Abstractions
     public interface IRawAccess
     {
         /// <summary>
-        /// Gets or sets the value.
+        /// Gets or sets the value or throws Exception.
         /// </summary>
         object Value { get; set; }
     }

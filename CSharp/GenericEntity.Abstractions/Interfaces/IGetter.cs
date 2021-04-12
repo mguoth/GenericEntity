@@ -8,11 +8,10 @@ namespace GenericEntity.Abstractions
     /// Field value getter interface
     /// </summary>
     /// <typeparam name="T">The field value type</typeparam>
-    public interface IGetter<T> : IGetterSetterSupported
+    public interface IGetter<T>
     {
         /// <summary>
-        /// Gets the value in case it is supported otherwise throws NotSupportedException
-        /// <exception cref="NotSupportedException"></exception>
+        /// Gets the value
         /// </summary>
         T Value { get; }
     }

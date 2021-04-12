@@ -6,12 +6,10 @@ using System.Text;
 namespace GenericEntity.Extensions
 {
     [FieldType("integer")]
-    public class IntegerField : Field<int>, IGetter<string>
+    public class IntegerField : Field<int>
     {
         public IntegerField(IFieldDefinition fieldDefinition): base(fieldDefinition)
         {
         }
-
-        string IGetter<string>.Value => this.Value.ToString();
     }
 }

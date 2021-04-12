@@ -11,5 +11,15 @@ namespace GenericEntity
         {
             return (IRawAccess) field;
         }
+
+        public static IGenericAccess<T> As<T>(this IField field)
+        {
+            IGenericAccess<T> implicitAccessor = field as IGenericAccess<T>;
+            if (implicitAccessor != null)
+            {
+                return implicitAccessor;
+            }
+            return new GenericAccess<T>(field);
+        }
     }
 }

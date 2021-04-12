@@ -1,8 +1,8 @@
 ﻿using GenericEntity.Abstractions;
 using GenericEntity.Extensions;
-using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Text.Json;
 
 namespace GenericEntity.CLI
 {
@@ -14,20 +14,27 @@ namespace GenericEntity.CLI
 
             //Creating address entity
             GenericEntity address = new GenericEntity("Address", schemaRepository);
-            address.Fields["id"].SetInt32().Value = 1;
-            address.Fields["addressLine1"].SetString().Value = "Wall Street 35";
-            address.Fields["city"].SetString().Value = "New York";
-            address.Fields["postalCode"].SetString().Value = "10030";
-            address.Fields["country"].SetString().Value = "US";
 
-            //Get field value as int
-            int id = address.Fields["id"].GetInt32().Value;
+            //Direct access to fields and strongly typed values
+            address.Fields["id"].AsInt32().Value = 1;
+            address.Fields["addressLine1"].AsString().Value = "Wall Street 35";
+            address.Fields["city"].AsString().Value = "New York";
+            address.Fields["postalCode"].AsString().Value = "10030";
+            address.Fields["country"].AsString().Value = "US";
 
-            //Listing field values as strings
-            Console.WriteLine($"({address.Schema.EntityType})");
-            foreach (IField field in address.Fields)
+            //Create DTO and serialise it
+            GenericEntityDto addressDto = address.ToDto();
+            string json = JsonSerializer.Serialize(addressDto);
+            
+            //Deserialise DTO and reconstruct entity            
+            GenericEntityDto reconstructedAddressDto = JsonSerializer.Deserialize<GenericEntityDto>(json);
+            GenericEntity reconstructedAddress = new GenericEntity(reconstructedAddressDto, schemaRepository);
+
+            //Enumerating fields and getting value as string (to string conversion is supported by all field types)
+            Console.WriteLine($"({reconstructedAddress.Schema.EntityType})");
+            foreach (IField field in reconstructedAddress.Fields)
             {
-                Console.WriteLine($"|- {field.Definition.Name} ({field.DataType}): {field.GetString().Value}");               
+                Console.WriteLine($"|- {field.Definition.Name} ({field.DataType}): {field.AsString().Value}");
             }
         }
     }

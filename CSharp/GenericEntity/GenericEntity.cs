@@ -43,7 +43,7 @@ namespace GenericEntity
         {
             foreach (var field in dto.Fields)
             {
-                this.Fields[field.Key].AsRaw().Value = Convert.ChangeType(field.Value, this.Fields[field.Key].DataType);
+                this.Fields[field.Key].SetValue(field.Value);
             }
         }
 
@@ -66,7 +66,7 @@ namespace GenericEntity
 
             foreach (IField field in this.Fields)
             {
-                dto.Fields.Add(field.Definition.Name, field.AsRaw().Value);
+                dto.Fields.Add(field.Definition.Name, field.GetValue<object>());
             }
             return dto;
         }

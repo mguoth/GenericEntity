@@ -16,11 +16,11 @@ namespace GenericEntity.CLI
             GenericEntity address = new GenericEntity("Address", schemaRepository);
 
             //Direct access to fields and strongly typed values
-            address.Fields["id"].AsInt32().Value = 1;
-            address.Fields["addressLine1"].AsString().Value = "Wall Street 35";
-            address.Fields["city"].AsString().Value = "New York";
-            address.Fields["postalCode"].AsString().Value = "10030";
-            address.Fields["country"].AsString().Value = "US";
+            address.Fields["id"].SetValue(1);
+            address.Fields["addressLine1"].SetValue("Wall Street 35");
+            address.Fields["city"].SetValue("New York");
+            address.Fields["postalCode"].SetValue("10030");
+            address.Fields["country"].SetValue("US");
 
             //Create DTO and serialise it
             GenericEntityDto addressDto = address.ToDto();
@@ -34,7 +34,7 @@ namespace GenericEntity.CLI
             Console.WriteLine($"({reconstructedAddress.Schema.EntityType})");
             foreach (IField field in reconstructedAddress.Fields)
             {
-                Console.WriteLine($"|- {field.Definition.Name} ({field.DataType}): {field.AsString().Value}");
+                Console.WriteLine($"|- {field.Definition.Name} ({field.DataType}): {field.GetValue<string>()}");
             }
         }
     }

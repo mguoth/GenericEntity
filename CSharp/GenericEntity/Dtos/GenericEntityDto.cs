@@ -5,14 +5,13 @@ using System.Text.Json.Serialization;
 
 namespace GenericEntity
 {
-
     public class GenericEntityDto
     {
         private IDictionary<string, object> fields = new Dictionary<string, object>();
 
         public string SchemaName { get; set; }
 
-        [JsonConverter(typeof(FieldsConverter))]
+        [JsonConverter(typeof(GenericEntityDtoFieldsConverter))]
         public IDictionary<string, object> Fields { get => fields; set => fields = value; }
     }
 }

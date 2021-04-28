@@ -1,5 +1,6 @@
 ﻿using GenericEntity.Abstractions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
@@ -43,7 +44,16 @@ namespace GenericEntity
         {
             foreach (var field in dto.Fields)
             {
-                this.Fields[field.Key].SetValue(field.Value);
+                if (field.Value is IJsonValueProvider jsonValueProvider)
+                {
+                    //Set value provider
+                    this.ImportFieldValue(this.Fields[field.Key], jsonValueProvider);
+                }
+                else
+                {
+                    //Set scalar value
+                    this.Fields[field.Key].SetValue(field.Value);
+                }
             }
         }
 
@@ -88,6 +98,20 @@ namespace GenericEntity
         {
             IField field = (IField)fieldDefinition.FieldType.GetConstructor(new Type[] { typeof(IFieldDefinition) }).Invoke(new object[] { fieldDefinition });
             return field;
+        }
+
+        private void ImportFieldValue(IField field, IJsonValueProvider jsonValueProvider)
+        {
+            switch (field.Definition.Type)
+            {
+                case "string":
+                    field.SetValue(jsonValueProvider.GetString());
+                    break;
+
+                case "integer":
+                    field.SetValue(jsonValueProvider.GetInteger());
+                    break;
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GenericEntity.System.Text.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
@@ -6,9 +7,9 @@ using System.Text.Json.Serialization;
 
 namespace GenericEntity
 {
-    public class FieldsConverter : JsonConverter<IDictionary<string, object>>
+    public class GenericEntityDtoFieldsConverter : JsonConverter<IDictionary<string, object>>
     {
-        private readonly static JsonConverter<object> valueConverter = new ObjectToInferredTypesConverter();
+        private readonly static ObjectJsonConverter valueConverter = new ObjectJsonConverter();
 
         public override IDictionary<string, object> Read(
             ref Utf8JsonReader reader,

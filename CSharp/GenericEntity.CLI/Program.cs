@@ -24,7 +24,7 @@ namespace GenericEntity.CLI
 
             //Create DTO and serialise it
             GenericEntityDto addressDto = address.ToDto();
-            string json = JsonSerializer.Serialize(addressDto);
+            string json = JsonSerializer.Serialize(addressDto, new JsonSerializerOptions() { WriteIndented = true });
             
             //Deserialise DTO and reconstruct entity            
             GenericEntityDto reconstructedAddressDto = JsonSerializer.Deserialize<GenericEntityDto>(json);

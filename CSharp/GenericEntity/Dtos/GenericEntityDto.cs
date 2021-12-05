@@ -5,11 +5,11 @@ using System.Text.Json.Serialization;
 
 namespace GenericEntity
 {
-    public class GenericEntityDto
+    internal class GenericEntityDto
     {
         private IDictionary<string, object> fields = new Dictionary<string, object>();
 
-        public string SchemaName { get; set; }
+        public string Schema { get; set; }
 
         [JsonConverter(typeof(GenericEntityDtoFieldsConverter))]
         public IDictionary<string, object> Fields { get => fields; set => fields = value; }

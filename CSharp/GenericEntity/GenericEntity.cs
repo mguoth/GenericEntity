@@ -4,14 +4,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace GenericEntity
 {
     /// <summary>
     /// Generic entity
     /// </summary>
+    [JsonConverter(typeof(GenericEntityConverter))]
     public partial class GenericEntity
     {
+        public static ISchemaRepository DefaultSchemaRepository { get; set; }
         private static readonly object syncRoot = new object();
         private static readonly IDictionary<string, Schema> compiledSchemaCache = new Dictionary<string, Schema>();
 
@@ -40,7 +43,7 @@ namespace GenericEntity
             this.Fields = BuildFields();
         }
 
-        public GenericEntity(GenericEntityDto dto, ISchemaRepository schemaRepository) : this(dto.SchemaName, schemaRepository)
+        internal GenericEntity(GenericEntityDto dto, ISchemaRepository schemaRepository) : this(dto.Schema, schemaRepository)
         {
             foreach (var field in dto.Fields)
             {
@@ -65,21 +68,6 @@ namespace GenericEntity
         /// Gets fields
         /// </summary>
         public FieldCollection Fields { get; }
-
-        /// <summary>
-        /// Converts to Dto.
-        /// </summary>
-        public GenericEntityDto ToDto()
-        {
-            GenericEntityDto dto = new GenericEntityDto();
-            dto.SchemaName = this.SchemaName;
-
-            foreach (IField field in this.Fields)
-            {
-                dto.Fields.Add(field.Definition.Name, field.Get<object>());
-            }
-            return dto;
-        }
 
         private FieldCollection BuildFields()
         {

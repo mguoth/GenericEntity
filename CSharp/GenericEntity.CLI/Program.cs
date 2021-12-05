@@ -3,6 +3,7 @@ using GenericEntity.Extensions;
 using System;
 using System.IO;
 using System.Text.Json;
+using GenericEntity;
 
 namespace GenericEntity.CLI
 {
@@ -10,7 +11,9 @@ namespace GenericEntity.CLI
     {
         static void Main(string[] args)
         {
+            //Initialization
             ISchemaRepository schemaRepository = new JsonFileSchemaRepository("Schemas");
+            GenericEntity.DefaultSchemaRepository = schemaRepository;
 
             //Creating address entity
             GenericEntity address = new GenericEntity("Address", schemaRepository);
@@ -22,13 +25,11 @@ namespace GenericEntity.CLI
             address.Fields["postalCode"].SetString("10030");
             address.Fields["country"].SetString("US");
 
-            //Create DTO and serialise it
-            GenericEntityDto addressDto = address.ToDto();
-            string json = JsonSerializer.Serialize(addressDto, new JsonSerializerOptions() { WriteIndented = true });
-            
-            //Deserialise DTO and reconstruct entity            
-            GenericEntityDto reconstructedAddressDto = JsonSerializer.Deserialize<GenericEntityDto>(json);
-            GenericEntity reconstructedAddress = new GenericEntity(reconstructedAddressDto, schemaRepository);
+            //Serialise generic entity into Json
+            string json = JsonSerializer.Serialize(address, new JsonSerializerOptions() { WriteIndented = true });
+
+            //Deserialise generic entity from Json
+            GenericEntity reconstructedAddress = JsonSerializer.Deserialize<GenericEntity>(json);
 
             //Enumerating fields and getting value as string (to string conversion is supported by all field types)
             Console.WriteLine($"{address.SchemaName} {nameof(address)} ({address.GetType()})");

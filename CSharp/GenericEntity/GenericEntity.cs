@@ -52,7 +52,7 @@ namespace GenericEntity
                 else
                 {
                     //Set scalar value
-                    this.Fields[field.Key].SetValue(field.Value);
+                    this.Fields[field.Key].Set(field.Value);
                 }
             }
         }
@@ -76,7 +76,7 @@ namespace GenericEntity
 
             foreach (IField field in this.Fields)
             {
-                dto.Fields.Add(field.Definition.Name, field.GetValue<object>());
+                dto.Fields.Add(field.Definition.Name, field.Get<object>());
             }
             return dto;
         }
@@ -105,11 +105,11 @@ namespace GenericEntity
             switch (field.Definition.Type)
             {
                 case "string":
-                    field.SetValue(jsonValueProvider.GetString());
+                    field.Set(jsonValueProvider.GetString());
                     break;
 
                 case "integer":
-                    field.SetValue(jsonValueProvider.GetInteger());
+                    field.Set(jsonValueProvider.GetInteger());
                     break;
             }
         }

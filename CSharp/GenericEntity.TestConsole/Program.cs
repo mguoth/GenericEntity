@@ -12,7 +12,7 @@ namespace GenericEntity.CLI
     {
         static void Main(string[] args)
         {
-            //Initialization
+            //Initialization of the schema repository
             ISchemaRepository schemaRepository = new JsonFileSchemaRepository("Schemas");
             GenericEntity.DefaultSchemaRepository = schemaRepository;
 

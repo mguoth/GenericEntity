@@ -24,9 +24,9 @@ namespace GenericEntity
             this.extensionsAssemblies = new Assembly[] { extensionAssembly };
         }
 
-        public Schema Compile(string schemaName)
+        public Schema Compile(string schema)
         {
-            SchemaModel.SchemaDefinition schemaDefinition = this.schemaRepository.GetSchema(schemaName);
+            SchemaModel.SchemaDefinition schemaDefinition = this.schemaRepository.GetSchema(schema);
 
             var scannedTypes = extensionsAssemblies.ScanTypesForCustomAttributes<FieldTypeAttribute>();
 

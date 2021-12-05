@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Text.Json;
 using GenericEntity;
+using System.Linq;
 
 namespace GenericEntity.CLI
 {
@@ -11,7 +12,7 @@ namespace GenericEntity.CLI
     {
         static void Main(string[] args)
         {
-            //Initialization
+            //Initialization of the schema repository
             ISchemaRepository schemaRepository = new JsonFileSchemaRepository("Schemas");
             GenericEntity.DefaultSchemaRepository = schemaRepository;
 
@@ -41,11 +42,12 @@ namespace GenericEntity.CLI
         {
             Console.WriteLine($@"Reading generic entity ""{genericEntity.Schema.EntityType}"" fields:");
 
+            //Enumerating fields and setting the string value (which is validated and converted into proper field type)
             foreach (IField field in genericEntity.Fields)
             {
                 while (true)
                 {
-                    Console.Write($"{field.Definition.Name} ({field.Definition.Type}): ");
+                    Console.Write($"{field.Definition.DisplayName} ({field.Definition.Type}): ");
                     string value = Console.ReadLine();
 
                     try
@@ -64,17 +66,18 @@ namespace GenericEntity.CLI
 
         private static void PrintToConsole(GenericEntity genericEntity)
         {
-            //Enumerating fields and getting value as string (to string conversion is supported by all field types)
+            int[] columnWidths = new int[] { 15, 20, 15, 15 };
             Console.WriteLine($@"Printing generic entity ""{genericEntity.Schema.EntityType}"" fields:");
-            
-            Console.WriteLine($"{"Name".PadRight(20)}{"Type".PadRight(15)}{"NET Type".PadRight(15)}{"Value"}");
-            Console.WriteLine($"{"-".PadRight(60, '-')}");
 
+            int i = 0;
+            Console.WriteLine($"{"Name".PadRight(columnWidths[i++])}{"DisplayName".PadRight(columnWidths[i++])}{"Type".PadRight(columnWidths[i++])}{"NET Type".PadRight(columnWidths[i++])}{"Value"}");
+            Console.WriteLine($"{"-".PadRight(columnWidths.Sum() + 5, '-')}");
+
+            //Enumerating fields and getting value as string (such conversion is safe for all field types)
             foreach (IField field in genericEntity.Fields)
             {
-                int fieldNameTabs = field.Definition.Name.Length / 8;
-
-                Console.WriteLine($"{field.Definition.Name.PadRight(20)}{field.Definition.Type.PadRight(15)}{field.DataType.ToString().PadRight(15)}{field.GetString()}");
+                i = 0;
+                Console.WriteLine($"{field.Definition.Name.PadRight(columnWidths[i++])}{field.Definition.DisplayName.PadRight(columnWidths[i++])}{field.Definition.Type.PadRight(columnWidths[i++])}{field.DataType.ToString().PadRight(columnWidths[i++])}{field.GetString()}");
             }
             Console.WriteLine();
         }

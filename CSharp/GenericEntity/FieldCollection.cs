@@ -21,7 +21,7 @@ namespace GenericEntity
         /// <value>
         /// The <see cref="IField"/>.
         /// </value>
-        /// <param name="fieldName">Name of the field.</param>
+        /// <param name="fieldName">Name of the field. Use field names from schema (avoid hardcoded values)</param>
         /// <returns></returns>
         public IField this[string fieldName]
         {

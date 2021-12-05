@@ -18,40 +18,54 @@ namespace GenericEntity.CLI
             //Creating address entity
             GenericEntity address = new GenericEntity("Address", schemaRepository);
 
-            //Direct access to fields and strongly typed values
-            address.Fields["id"].SetInteger(1);
-            address.Fields["addressLine1"].SetString("Wall Street 35");
-            address.Fields["city"].SetString("New York");
-            address.Fields["postalCode"].SetString("10030");
-            address.Fields["country"].SetString("US");
+            ReadFromConsole(address);
 
-            Console.WriteLine($@"Creating generic entity with ""Address"" schema.");
-            Console.WriteLine();
+            PrintToConsole(address);
 
-            Print(address);
-
-            Console.WriteLine($"Serialising it into JSON.");
-            Console.WriteLine();
+            Console.WriteLine($"Serialising it into JSON." + Environment.NewLine);
 
             //Serialise generic entity into Json
             string json = JsonSerializer.Serialize(address, new JsonSerializerOptions() { WriteIndented = true });
             
-            Console.WriteLine(json);
-            Console.WriteLine();
+            Console.WriteLine(json + Environment.NewLine);
 
-            Console.WriteLine($"Deserialising it back into generic entity.");
-            Console.WriteLine();
+            Console.WriteLine($"Deserialising it back into generic entity." + Environment.NewLine);
 
             //Deserialise generic entity from Json
             GenericEntity reconstructedAddress = JsonSerializer.Deserialize<GenericEntity>(json);
 
-            Print(reconstructedAddress);
+            PrintToConsole(reconstructedAddress);
         }
 
-        private static void Print(GenericEntity genericEntity)
+        private static void ReadFromConsole(GenericEntity genericEntity)
+        {
+            Console.WriteLine($@"Reading generic entity ""{genericEntity.Schema.EntityType}"" fields:");
+
+            foreach (IField field in genericEntity.Fields)
+            {
+                while (true)
+                {
+                    Console.Write($"{field.Definition.Name} ({field.Definition.Type}): ");
+                    string value = Console.ReadLine();
+
+                    try
+                    {
+                        field.SetString(value);
+                        break;
+                    }
+                    catch (Exception exc)
+                    {
+                        Console.WriteLine(@$"Can't set ""{value}"" into ""{field.Definition.Type}"" field type.");
+                    }
+                }
+            }
+            Console.WriteLine("Reading completed." + Environment.NewLine);
+        }
+
+        private static void PrintToConsole(GenericEntity genericEntity)
         {
             //Enumerating fields and getting value as string (to string conversion is supported by all field types)
-            Console.WriteLine($@"Generic entity ""{genericEntity.Schema.EntityType}"" fields:");
+            Console.WriteLine($@"Printing generic entity ""{genericEntity.Schema.EntityType}"" fields:");
             
             Console.WriteLine($"{"Name".PadRight(20)}{"Type".PadRight(15)}{"NET Type".PadRight(15)}{"Value"}");
             Console.WriteLine($"{"-".PadRight(60, '-')}");

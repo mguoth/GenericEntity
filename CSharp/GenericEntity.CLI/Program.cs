@@ -32,7 +32,7 @@ namespace GenericEntity.CLI
             GenericEntity reconstructedAddress = JsonSerializer.Deserialize<GenericEntity>(json);
 
             //Enumerating fields and getting value as string (to string conversion is supported by all field types)
-            Console.WriteLine($"{address.SchemaName} {nameof(address)} ({address.GetType()})");
+            Console.WriteLine($"{address.Schema.EntityType} {nameof(address)} ({address.GetType()})");
             foreach (IField field in reconstructedAddress.Fields)
             {
                 Console.WriteLine($"|- {field.Definition.Type} {field.Definition.Name}: {field.GetString()} ({field.DataType})");

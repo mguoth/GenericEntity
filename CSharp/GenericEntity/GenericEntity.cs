@@ -18,25 +18,23 @@ namespace GenericEntity
         private static readonly object syncRoot = new object();
         private static readonly IDictionary<string, Schema> compiledSchemaCache = new Dictionary<string, Schema>();
 
-        public GenericEntity(string schemaName, ISchemaRepository schemaRepository)
+        public GenericEntity(string schema, ISchemaRepository schemaRepository)
         {
-            this.SchemaName = schemaName;
-
             SchemaCompiler schemaCompiler = new SchemaCompiler(schemaRepository, Assembly.Load("GenericEntity.Extensions"));
 
-            Schema schema;
+            Schema compiledSchema;
             lock (syncRoot)
             {
-                if (compiledSchemaCache.TryGetValue(schemaName, out schema))
+                if (compiledSchemaCache.TryGetValue(schema, out compiledSchema))
                 {
                     //Get from cache if exists
-                    this.Schema = schema;
+                    this.Schema = compiledSchema;
                 }
                 else
                 {
                     //Compile and index into cache
-                    this.Schema = schemaCompiler.Compile(schemaName);
-                    compiledSchemaCache[schemaName] = this.Schema;
+                    this.Schema = schemaCompiler.Compile(schema);
+                    compiledSchemaCache[schema] = this.Schema;
                 }
             }
 
@@ -59,8 +57,6 @@ namespace GenericEntity
                 }
             }
         }
-
-        public string SchemaName { get; }
 
         public Schema Schema { get; }
 

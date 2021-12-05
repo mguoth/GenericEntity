@@ -25,7 +25,7 @@ namespace GenericEntity.CLI
             address.Fields["postalCode"].SetString("10030");
             address.Fields["country"].SetString("US");
 
-            Console.WriteLine($"Creating generic entity instance.");
+            Console.WriteLine($@"Creating generic entity with ""Address"" schema.");
             Console.WriteLine();
 
             Print(address);
@@ -51,10 +51,16 @@ namespace GenericEntity.CLI
         private static void Print(GenericEntity genericEntity)
         {
             //Enumerating fields and getting value as string (to string conversion is supported by all field types)
-            Console.WriteLine($"{genericEntity.Schema.EntityType} entity ({genericEntity.GetType()})");
+            Console.WriteLine($@"Generic entity ""{genericEntity.Schema.EntityType}"" fields:");
+            
+            Console.WriteLine($"{"Name".PadRight(20)}{"Type".PadRight(15)}{"NET Type".PadRight(15)}{"Value"}");
+            Console.WriteLine($"{"-".PadRight(60, '-')}");
+
             foreach (IField field in genericEntity.Fields)
             {
-                Console.WriteLine($"|- {field.Definition.Type} {field.Definition.Name}: {field.GetString()} ({field.DataType})");
+                int fieldNameTabs = field.Definition.Name.Length / 8;
+
+                Console.WriteLine($"{field.Definition.Name.PadRight(20)}{field.Definition.Type.PadRight(15)}{field.DataType.ToString().PadRight(15)}{field.GetString()}");
             }
             Console.WriteLine();
         }

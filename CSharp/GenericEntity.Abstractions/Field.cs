@@ -20,24 +20,37 @@ namespace GenericEntity.Abstractions
         {
             get
             {
-                return this.GetDataTypeInternal(); 
+                return this.GetDataTypeInternal();
             }
         }
 
-        private object Value
+        /// <inheritdoc/>
+        public T GetValue<T>()
         {
-            get
+            if (this is IField<T> field)
             {
-                return this.GetValueInternal();
+                return field.Value;
             }
-            set
+
+            //Try convert
+            try
             {
-                this.SetValueInternal(value);
+                return (T)Convert.ChangeType(this.GetValueInternal(), typeof(T));
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($@"Can't convert the field value of ""{this.DataType}"" type into the ""{typeof(T)}"" return type", ex);
             }
         }
-        
+
+        /// <inheritdoc/>
+        public void SetValue<T>(T value)
+        {
+            this.SetValueInternal(value);
+        }
+
         protected abstract Type GetDataTypeInternal();
-        protected abstract void SetValueInternal(object Value);
+        protected abstract void SetValueInternal<T>(T Value);
         protected abstract object GetValueInternal();
     }
 
@@ -45,7 +58,7 @@ namespace GenericEntity.Abstractions
     /// Generic base field class
     /// </summary>
     /// <typeparam name="T">The field value type</typeparam>
-    public abstract class Field<T> : Field, IGetter<T>, ISetter<T>, IGetterSetterSupported
+    public abstract class Field<T> : Field, IField<T>
     {
         public Field(IFieldDefinition definition) : base(definition)
         {
@@ -54,28 +67,7 @@ namespace GenericEntity.Abstractions
         /// <summary>
         /// Gets or sets the value.
         /// </summary>
-        protected T Value { get; set; }
-
-        /// <inheritdoc/>
-        T IGetter<T>.Value
-        {
-            get
-            {
-                return this.Value;
-            }
-        }
-
-        /// <inheritdoc/>
-        T ISetter<T>.Value
-        {
-            set
-            {
-                this.Value = value;
-            }
-        }
-
-        /// <inheritdoc/>
-        bool IGetterSetterSupported.IsSupported => true;
+        public T Value { get; set; }
 
         protected sealed override Type GetDataTypeInternal()
         {
@@ -84,18 +76,24 @@ namespace GenericEntity.Abstractions
 
         protected sealed override object GetValueInternal()
         {
-            return ((IGetter<T>) this).Value;
+            return this.Value;
         }
 
-        protected sealed override void SetValueInternal(object value)
+        protected sealed override void SetValueInternal<TRequested>(TRequested value)
         {
+            if (value is T castedValue)
+            {
+                this.Value = castedValue;
+                return;
+            }
+
             try
             {
-                ((ISetter<T>) this).Value = (T)value;
+                this.Value = (T) Convert.ChangeType(value, typeof(T));
             }
-            catch (InvalidCastException ex)
+            catch (Exception ex)
             {
-                throw new InvalidOperationException($@"Can't set a value of ""{value.GetType()}"" type into the field value of ""{this.DataType}"" type", ex);
+                throw new InvalidOperationException($@"Can't convert the value of ""{typeof(TRequested)}"" type into the field value of ""{typeof(T)}"" type", ex);
             }
         }
     }

@@ -5,11 +5,11 @@ using System.Text;
 
 namespace GenericEntity.Extensions
 {
-    [FieldType("integer")]
-    public class IntegerField : Field<int>
+    public static class JsonValueProviderExtensions
     {
-        public IntegerField(IFieldDefinition fieldDefinition): base(fieldDefinition)
+        public static bool GetBool(this IJsonValueProvider jsonValueProvider)
         {
+            return true;
         }
     }
 }

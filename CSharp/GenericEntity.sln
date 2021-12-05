@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericEntity.Extensions", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericEntity", "GenericEntity\GenericEntity.csproj", "{020EA87B-C243-428F-A981-BE72F6E66735}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericEntity.Model", "GenericEntity.Model\GenericEntity.Model.csproj", "{7AC62CE2-C67F-4AE7-A9F9-4FC0A10A27E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schema.Model", "Schema.Model\Schema.Model.csproj", "{7AC62CE2-C67F-4AE7-A9F9-4FC0A10A27E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

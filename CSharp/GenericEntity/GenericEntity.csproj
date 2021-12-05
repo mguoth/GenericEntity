@@ -5,9 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\GenericEntity.Abstractions\GenericEntity.Abstractions.csproj" />
-    <ProjectReference Include="..\GenericEntity.Extensions\GenericEntity.Extensions.csproj" />
-    <ProjectReference Include="..\GenericEntity.Model\GenericEntity.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
   </ItemGroup>
 
 </Project>

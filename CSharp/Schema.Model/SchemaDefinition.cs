@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GenericEntity.Model
+namespace Schema.Model
 {
     public class SchemaDefinition
     {

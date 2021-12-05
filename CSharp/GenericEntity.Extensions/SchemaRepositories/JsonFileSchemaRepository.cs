@@ -1,5 +1,5 @@
 ﻿using GenericEntity.Abstractions;
-using GenericEntity.Model;
+using SchemaModel = Schema.Model;
 using Newtonsoft.Json;
 using System.IO;
 
@@ -14,11 +14,11 @@ namespace GenericEntity.Extensions
             this.schemaDirectory = schemaDirectory;
         }
 
-        public SchemaDefinition GetSchema(string name)
+        public SchemaModel.SchemaDefinition GetSchema(string name)
         {
             string schemaFileName = Path.Combine(this.schemaDirectory, $"{name}.json");
 
-            SchemaDefinition schemaDefinition = JsonConvert.DeserializeObject<SchemaDefinition>(File.ReadAllText(schemaFileName));
+            SchemaModel.SchemaDefinition schemaDefinition = JsonConvert.DeserializeObject<SchemaModel.SchemaDefinition>(File.ReadAllText(schemaFileName));
             return schemaDefinition;
         }
     }

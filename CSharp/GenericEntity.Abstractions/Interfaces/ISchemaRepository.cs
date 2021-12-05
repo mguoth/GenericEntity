@@ -1,4 +1,4 @@
-﻿using GenericEntity.Model;
+﻿using SchemaModel = Schema.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,6 +12,6 @@ namespace GenericEntity.Abstractions
         /// </summary>
         /// <param name="name">The schema name.</param>
         /// <returns></returns>
-        SchemaDefinition GetSchema(string name);
+        SchemaModel.SchemaDefinition GetSchema(string name);
     }
 }

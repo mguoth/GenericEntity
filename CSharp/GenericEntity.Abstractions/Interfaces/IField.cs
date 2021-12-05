@@ -23,7 +23,7 @@ namespace GenericEntity.Abstractions
         /// </summary>
         /// <typeparam name="T">The target type</typeparam>
         /// <exception cref="InvalidOperationException">In case the type conversion has failed</exception>
-        T GetValue<T>();
+        T Get<T>();
 
         /// <summary>
         /// Sets the value with prior conversion into DataType.
@@ -31,7 +31,7 @@ namespace GenericEntity.Abstractions
         /// <typeparam name="T">The source type</typeparam>
         /// <param name="value">The value.</param>
         /// <exception cref="InvalidOperationException">In case the type conversion has failed</exception>
-        void SetValue<T>(T value);
+        void Set<T>(T value);
     }
 
     /// <summary>

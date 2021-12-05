@@ -4,43 +4,44 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace GenericEntity
 {
     /// <summary>
     /// Generic entity
     /// </summary>
+    [JsonConverter(typeof(GenericEntityConverter))]
     public partial class GenericEntity
     {
+        public static ISchemaRepository DefaultSchemaRepository { get; set; }
         private static readonly object syncRoot = new object();
         private static readonly IDictionary<string, Schema> compiledSchemaCache = new Dictionary<string, Schema>();
 
-        public GenericEntity(string schemaName, ISchemaRepository schemaRepository)
+        public GenericEntity(string schema, ISchemaRepository schemaRepository)
         {
-            this.SchemaName = schemaName;
-
             SchemaCompiler schemaCompiler = new SchemaCompiler(schemaRepository, Assembly.Load("GenericEntity.Extensions"));
 
-            Schema schema;
+            Schema compiledSchema;
             lock (syncRoot)
             {
-                if (compiledSchemaCache.TryGetValue(schemaName, out schema))
+                if (compiledSchemaCache.TryGetValue(schema, out compiledSchema))
                 {
                     //Get from cache if exists
-                    this.Schema = schema;
+                    this.Schema = compiledSchema;
                 }
                 else
                 {
                     //Compile and index into cache
-                    this.Schema = schemaCompiler.Compile(schemaName);
-                    compiledSchemaCache[schemaName] = this.Schema;
+                    this.Schema = schemaCompiler.Compile(schema);
+                    compiledSchemaCache[schema] = this.Schema;
                 }
             }
 
             this.Fields = BuildFields();
         }
 
-        public GenericEntity(GenericEntityDto dto, ISchemaRepository schemaRepository) : this(dto.SchemaName, schemaRepository)
+        internal GenericEntity(GenericEntityDto dto, ISchemaRepository schemaRepository) : this(dto.Schema, schemaRepository)
         {
             foreach (var field in dto.Fields)
             {
@@ -52,12 +53,10 @@ namespace GenericEntity
                 else
                 {
                     //Set scalar value
-                    this.Fields[field.Key].SetValue(field.Value);
+                    this.Fields[field.Key].Set(field.Value);
                 }
             }
         }
-
-        public string SchemaName { get; }
 
         public Schema Schema { get; }
 
@@ -65,21 +64,6 @@ namespace GenericEntity
         /// Gets fields
         /// </summary>
         public FieldCollection Fields { get; }
-
-        /// <summary>
-        /// Converts to Dto.
-        /// </summary>
-        public GenericEntityDto ToDto()
-        {
-            GenericEntityDto dto = new GenericEntityDto();
-            dto.SchemaName = this.SchemaName;
-
-            foreach (IField field in this.Fields)
-            {
-                dto.Fields.Add(field.Definition.Name, field.GetValue<object>());
-            }
-            return dto;
-        }
 
         private FieldCollection BuildFields()
         {
@@ -105,11 +89,11 @@ namespace GenericEntity
             switch (field.Definition.Type)
             {
                 case "string":
-                    field.SetValue(jsonValueProvider.GetString());
+                    field.Set(jsonValueProvider.GetString());
                     break;
 
                 case "integer":
-                    field.SetValue(jsonValueProvider.GetInteger());
+                    field.Set(jsonValueProvider.GetInteger());
                     break;
             }
         }

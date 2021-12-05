@@ -25,7 +25,7 @@ namespace GenericEntity.Abstractions
         }
 
         /// <inheritdoc/>
-        public T GetValue<T>()
+        public T Get<T>()
         {
             if (this is IField<T> field)
             {
@@ -44,7 +44,7 @@ namespace GenericEntity.Abstractions
         }
 
         /// <inheritdoc/>
-        public void SetValue<T>(T value)
+        public void Set<T>(T value)
         {
             this.SetValueInternal(value);
         }

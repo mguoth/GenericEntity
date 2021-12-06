@@ -5,6 +5,7 @@ using System.IO;
 using System.Text.Json;
 using GenericEntity;
 using System.Linq;
+using System.Reflection;
 
 namespace GenericEntity.CLI
 {
@@ -12,35 +13,29 @@ namespace GenericEntity.CLI
     {
         static void Main(string[] args)
         {
+            if (args.Length < 1)
+            {
+                Console.WriteLine($"Syntax: {Assembly.GetExecutingAssembly().GetName().Name}.exe $schema");
+                return;
+            }
+
+            string schema = args[0];
+
             //Initialization of the schema repository
             ISchemaRepository schemaRepository = new JsonFileSchemaRepository("Schemas");
             GenericEntity.DefaultSchemaRepository = schemaRepository;
 
             //Creating address entity
-            GenericEntity address = new GenericEntity("Address", schemaRepository);
+            GenericEntity address = new GenericEntity(schema, schemaRepository);
 
             ReadFromConsole(address);
 
             PrintToConsole(address);
-
-            Console.WriteLine($"Serialising it into JSON." + Environment.NewLine);
-
-            //Serialise generic entity into Json
-            string json = JsonSerializer.Serialize(address, new JsonSerializerOptions() { WriteIndented = true });
-            
-            Console.WriteLine(json + Environment.NewLine);
-
-            Console.WriteLine($"Deserialising it back into generic entity." + Environment.NewLine);
-
-            //Deserialise generic entity from Json
-            GenericEntity reconstructedAddress = JsonSerializer.Deserialize<GenericEntity>(json);
-
-            PrintToConsole(reconstructedAddress);
         }
 
         private static void ReadFromConsole(GenericEntity genericEntity)
         {
-            Console.WriteLine($@"Reading generic entity ""{genericEntity.Schema.EntityType}"" fields:");
+            Console.WriteLine($@"Please type generic entity ""{genericEntity.Schema.EntityType}"" fields values:");
 
             //Enumerating fields and setting the string value (which is validated and converted into proper field type)
             foreach (IField field in genericEntity.Fields)

@@ -7,7 +7,7 @@ namespace Schema.Model
     public class SchemaDefinition
     {
         public string Namespace { get; set; }
-        public string EntityType { get; set; }
+        public string Name { get; set; }
         public IList<FieldDefinition> Fields { get; set; }
     }
 }

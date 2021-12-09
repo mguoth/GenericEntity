@@ -19,7 +19,7 @@ namespace GenericEntity
         }
 
         public string Namespace => this.data.Namespace;
-        public string EntityType => this.data.EntityType;
+        public string Name => this.data.Name;
         public IList<IFieldDefinition> Fields { get; }
     }
 }

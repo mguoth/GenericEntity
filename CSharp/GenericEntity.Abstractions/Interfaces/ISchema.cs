@@ -8,7 +8,7 @@ namespace GenericEntity.Abstractions
     public interface ISchema
     {      
         string Namespace { get; }
-        string EntityType { get; }
+        string Name { get; }
         IList<IFieldDefinition> Fields { get; }
     }
 }

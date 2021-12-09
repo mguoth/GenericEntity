@@ -26,7 +26,7 @@ namespace GenericEntity
             JsonSerializerOptions options)
         {
             GenericEntityDto dto = new GenericEntityDto();
-            dto.Schema = objectToWrite.Schema.EntityType;
+            dto.Schema = objectToWrite.Schema.Name;
 
             foreach (IField field in objectToWrite.Fields)
             {

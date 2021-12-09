@@ -1,6 +1,6 @@
 {
   "namespace": "GenericEntity.Samples",
-  "entityType": "Address",
+  "name": "Address",
   "fields": [
     {
       "name": "id",

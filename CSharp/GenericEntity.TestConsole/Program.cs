@@ -35,7 +35,7 @@ namespace GenericEntity.CLI
 
         private static void ReadFromConsole(GenericEntity genericEntity)
         {
-            Console.WriteLine($@"Please type generic entity ""{genericEntity.Schema.EntityType}"" fields values:");
+            Console.WriteLine($@"Please type generic entity ""{genericEntity.Schema.Name}"" fields values:");
 
             //Enumerating fields and setting the string value (which is validated and converted into proper field type)
             foreach (IField field in genericEntity.Fields)
@@ -62,7 +62,7 @@ namespace GenericEntity.CLI
         private static void PrintToConsole(GenericEntity genericEntity)
         {
             int[] columnWidths = new int[] { 15, 20, 15, 15 };
-            Console.WriteLine($@"Printing generic entity ""{genericEntity.Schema.EntityType}"" fields:");
+            Console.WriteLine($@"Printing generic entity ""{genericEntity.Schema.Name}"" fields:");
 
             int i = 0;
             Console.WriteLine($"{"Name".PadRight(columnWidths[i++])}{"DisplayName".PadRight(columnWidths[i++])}{"Type".PadRight(columnWidths[i++])}{"NET Type".PadRight(columnWidths[i++])}{"Value"}");

@@ -26,7 +26,7 @@ namespace GenericEntity.Abstractions
         TTarget GetValue<TTarget>();
 
         /// <summary>
-        /// Sets the value with prior conversion into ValueType.
+        /// Sets the value with prior conversion into <see cref="ValueType"/>.
         /// </summary>
         /// <typeparam name="TSource">The source type</typeparam>
         /// <param name="value">The value.</param>

@@ -16,25 +16,26 @@ namespace GenericEntity
     {
         public static ISchemaRepository DefaultSchemaRepository { get; set; }
         private static readonly object syncRoot = new object();
-        private static readonly IDictionary<string, Schema> compiledSchemaCache = new Dictionary<string, Schema>();
+        private static readonly IDictionary<string, CompiledSchema> compiledSchemaCache = new Dictionary<string, CompiledSchema>();
+        private CompiledSchema compiledSchema;
+
 
         public GenericEntity(string schema, ISchemaRepository schemaRepository)
         {
             SchemaCompiler schemaCompiler = new SchemaCompiler(schemaRepository, Assembly.Load("GenericEntity.Extensions"));
 
-            Schema compiledSchema;
             lock (syncRoot)
             {
                 if (compiledSchemaCache.TryGetValue(schema, out compiledSchema))
                 {
                     //Get from cache if exists
-                    this.Schema = compiledSchema;
                 }
                 else
                 {
                     //Compile and index into cache
-                    this.Schema = schemaCompiler.Compile(schema);
-                    compiledSchemaCache[schema] = this.Schema;
+                    compiledSchema = schemaCompiler.Compile(schema);
+
+                    compiledSchemaCache[schema] = compiledSchema;
                 }
             }
 
@@ -53,12 +54,12 @@ namespace GenericEntity
                 else
                 {
                     //Set scalar value
-                    this.Fields[field.Key].Set(field.Value);
+                    this.Fields[field.Key].SetValue(field.Value);
                 }
             }
         }
 
-        public Schema Schema { get; }
+        public Abstractions.Schema Schema => compiledSchema.Schema;
 
         /// <summary>
         /// Gets fields
@@ -71,16 +72,16 @@ namespace GenericEntity
           
             foreach (FieldDefinition fieldDefinition in this.Schema.Fields)
             {
-                IField field = this.CreateField(fieldDefinition);
+                IField field = this.CreateField(fieldDefinition, compiledSchema.CompilerData.FieldTypes[fieldDefinition.Type]);
                 builder.Add(field);
             }
 
             return builder.Build();
         }
         
-        private IField CreateField(FieldDefinition fieldDefinition)
+        private IField CreateField(FieldDefinition fieldDefinition, Type fieldType)
         {
-            IField field = (IField)fieldDefinition.FieldType.GetConstructor(new Type[] { typeof(IFieldDefinition) }).Invoke(new object[] { fieldDefinition });
+            IField field = (IField) fieldType.GetConstructor(new Type[] { typeof(FieldDefinition) }).Invoke(new object[] { fieldDefinition });
             return field;
         }
 
@@ -89,11 +90,11 @@ namespace GenericEntity
             switch (field.Definition.Type)
             {
                 case "string":
-                    field.Set(jsonValueProvider.GetString());
+                    field.SetValue(jsonValueProvider.GetString());
                     break;
 
                 case "integer":
-                    field.Set(jsonValueProvider.GetInteger());
+                    field.SetValue(jsonValueProvider.GetInteger());
                     break;
             }
         }

@@ -8,7 +8,7 @@ namespace GenericEntity.Extensions
     [FieldType("integer")]
     public class IntegerField : Field<int>
     {
-        public IntegerField(IFieldDefinition fieldDefinition): base(fieldDefinition)
+        public IntegerField(FieldDefinition fieldDefinition): base(fieldDefinition)
         {
         }
     }

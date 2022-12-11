@@ -7,27 +7,27 @@ namespace GenericEntity.Abstractions
     /// </summary>
     public abstract class Field : IField
     {
-        public Field(IFieldDefinition definition)
+        public Field(FieldDefinition definition)
         {
             this.Definition = definition;
         }
 
         /// <inheritdoc/>
-        public IFieldDefinition Definition { get; }
+        public FieldDefinition Definition { get; }
 
         /// <inheritdoc/>
-        public Type DataType
+        public Type ValueType
         {
             get
             {
-                return this.GetDataTypeInternal();
+                return this.GetValueTypeInternal();
             }
         }
 
         /// <inheritdoc/>
-        public T Get<T>()
+        public TTarget GetValue<TTarget>()
         {
-            if (this is IField<T> field)
+            if (this is IField<TTarget> field)
             {
                 return field.Value;
             }
@@ -35,22 +35,22 @@ namespace GenericEntity.Abstractions
             //Try convert
             try
             {
-                return (T)Convert.ChangeType(this.GetValueInternal(), typeof(T));
+                return (TTarget) Convert.ChangeType(this.GetValueInternal(), typeof(TTarget));
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException($@"Can't convert the field value of ""{this.DataType}"" type into the ""{typeof(T)}"" return type", ex);
+                throw new InvalidOperationException($@"Can't convert the field value of ""{this.ValueType}"" type into the ""{typeof(TTarget)}"" return type", ex);
             }
         }
 
         /// <inheritdoc/>
-        public void Set<T>(T value)
+        public void SetValue<TSource>(TSource value)
         {
             this.SetValueInternal(value);
         }
 
-        protected abstract Type GetDataTypeInternal();
-        protected abstract void SetValueInternal<T>(T Value);
+        protected abstract Type GetValueTypeInternal();
+        protected abstract void SetValueInternal<TSource>(TSource Value);
         protected abstract object GetValueInternal();
     }
 
@@ -60,7 +60,7 @@ namespace GenericEntity.Abstractions
     /// <typeparam name="T">The field value type</typeparam>
     public abstract class Field<T> : Field, IField<T>
     {
-        public Field(IFieldDefinition definition) : base(definition)
+        public Field(FieldDefinition definition) : base(definition)
         {
         }
 
@@ -69,7 +69,7 @@ namespace GenericEntity.Abstractions
         /// </summary>
         public T Value { get; set; }
 
-        protected sealed override Type GetDataTypeInternal()
+        protected sealed override Type GetValueTypeInternal()
         {
             return typeof(T);
         }

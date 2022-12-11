@@ -30,7 +30,7 @@ namespace GenericEntity
 
             foreach (IField field in objectToWrite.Fields)
             {
-                dto.Fields.Add(field.Definition.Name, field.Get<object>());
+                dto.Fields.Add(field.Definition.Name, field.GetValue<object>());
             }
 
             JsonSerializer.Serialize(writer, dto, dto.GetType(), options);

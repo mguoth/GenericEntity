@@ -5,22 +5,20 @@ using SchemaModel = Schema.Model;
 
 namespace GenericEntity.Abstractions
 {
-    public class FieldDefinition : IFieldDefinition
+    public class FieldDefinition
     {
         private readonly SchemaModel.FieldDefinition data;
 
-        public FieldDefinition(ISchema schema, Type fieldType, SchemaModel.FieldDefinition data)
+        public FieldDefinition(Schema schema, SchemaModel.FieldDefinition data)
         {
             this.Schema = schema;
-            this.FieldType = fieldType;
             this.data = data;
         }
 
-        public ISchema Schema { get; }
+        public Schema Schema { get; }
         public string Name => this.data.Name;
         public string Type => this.data.Type;
         public string DisplayName => this.data.DisplayName;
         public string Description => this.data.Description;
-        public Type FieldType { get; }
     }
 }

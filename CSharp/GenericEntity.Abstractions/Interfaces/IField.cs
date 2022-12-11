@@ -10,28 +10,28 @@ namespace GenericEntity.Abstractions
         /// <summary>
         /// Gets field definition.
         /// </summary>
-        IFieldDefinition Definition { get; }
+        FieldDefinition Definition { get; }
 
         /// <summary>
         /// Gets field value type.
         /// </summary>
         /// <<inheritdoc />
-        Type DataType { get; }
+        Type ValueType { get; }
 
         /// <summary>
-        /// Gets the value and converts it to <see cref="T"/>.
+        /// Gets the value and converts it to <see cref="TTarget"/>.
         /// </summary>
-        /// <typeparam name="T">The target type</typeparam>
+        /// <typeparam name="TTarget">The target type</typeparam>
         /// <exception cref="InvalidOperationException">In case the type conversion has failed</exception>
-        T Get<T>();
+        TTarget GetValue<TTarget>();
 
         /// <summary>
-        /// Sets the value with prior conversion into DataType.
+        /// Sets the value with prior conversion into ValueType.
         /// </summary>
-        /// <typeparam name="T">The source type</typeparam>
+        /// <typeparam name="TSource">The source type</typeparam>
         /// <param name="value">The value.</param>
         /// <exception cref="InvalidOperationException">In case the type conversion has failed</exception>
-        void Set<T>(T value);
+        void SetValue<TSource>(TSource value);
     }
 
     /// <summary>

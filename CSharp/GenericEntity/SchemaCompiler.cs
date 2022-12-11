@@ -24,7 +24,7 @@ namespace GenericEntity
             this.extensionsAssemblies = new Assembly[] { extensionAssembly };
         }
 
-        public Schema Compile(string schema)
+        public CompiledSchema Compile(string schema)
         {
             SchemaModel.SchemaDefinition schemaDefinition = this.schemaRepository.GetSchema(schema);
 
@@ -54,7 +54,7 @@ namespace GenericEntity
 
             SchemaCompilerData compilerData = new SchemaCompilerData(fieldTypes);
 
-            return new Schema(schemaDefinition, compilerData);
+            return new CompiledSchema(new Abstractions.Schema(schemaDefinition), compilerData);
         }
     }
 }

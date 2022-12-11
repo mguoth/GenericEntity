@@ -47,7 +47,7 @@ namespace GenericEntity.CLI
 
                     try
                     {
-                        field.SetString(value);
+                        field.SetValue(value);
                         break;
                     }
                     catch (Exception exc)
@@ -72,7 +72,7 @@ namespace GenericEntity.CLI
             foreach (IField field in genericEntity.Fields)
             {
                 i = 0;
-                Console.WriteLine($"{field.Definition.Name.PadRight(columnWidths[i++])}{field.Definition.DisplayName.PadRight(columnWidths[i++])}{field.Definition.Type.PadRight(columnWidths[i++])}{field.DataType.ToString().PadRight(columnWidths[i++])}{field.GetString()}");
+                Console.WriteLine($"{field.Definition.Name.PadRight(columnWidths[i++])}{field.Definition.DisplayName.PadRight(columnWidths[i++])}{field.Definition.Type.PadRight(columnWidths[i++])}{field.ValueType.ToString().PadRight(columnWidths[i++])}{field.GetString()}");
             }
             Console.WriteLine();
         }

@@ -12,17 +12,7 @@ namespace GenericEntity.Extensions
         /// </summary>
         public static string GetString(this IField field)
         {
-            return field.Get<string>();
-        }
-
-        /// <summary>
-        /// Sets the string value with prior conversion into DataType.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <exception cref="InvalidOperationException">In case the type conversion has failed</exception>
-        public static void SetString(this IField field, string value)
-        {
-            field.Set(value);
+            return field.GetValue<string>();
         }
     }
 }

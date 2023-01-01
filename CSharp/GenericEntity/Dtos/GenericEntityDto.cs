@@ -7,11 +7,12 @@ namespace GenericEntity
 {
     internal class GenericEntityDto
     {
-        private IDictionary<string, object> fields = new Dictionary<string, object>();
+        private IDictionary<string, object> data = new Dictionary<string, object>();
 
-        public string Schema { get; set; }
+        public string SchemaUri { get; set; }
+        public string SchemaFormat { get; set; }
 
         [JsonConverter(typeof(GenericEntityDtoFieldsConverter))]
-        public IDictionary<string, object> Fields { get => fields; set => fields = value; }
+        public IDictionary<string, object> Data { get => data; set => data = value; }
     }
 }

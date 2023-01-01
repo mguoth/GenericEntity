@@ -22,7 +22,7 @@ namespace GenericEntity.System.Text.Json
                 case JsonTokenType.False:
                     return false;
                 case JsonTokenType.StartObject:
-                    return new JsonValueProvider(JsonDocument.ParseValue(ref reader));
+                    throw new NotSupportedException("Field value of type object are not supported");
                 case JsonTokenType.StartArray:
                     {
                         IList<object> list = new List<object>();
@@ -40,7 +40,7 @@ namespace GenericEntity.System.Text.Json
                     }
 
                 default:
-                    return new JsonValueProvider(JsonDocument.ParseValue(ref reader).RootElement.Clone());
+                    return new JsonFieldValueProvider(JsonDocument.ParseValue(ref reader).RootElement.Clone());
             }
         }
 

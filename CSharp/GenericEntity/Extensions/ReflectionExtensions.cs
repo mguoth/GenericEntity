@@ -14,18 +14,17 @@ namespace GenericEntity
         /// Scans assemblies for custom attributes.
         /// </summary>
         /// <typeparam name="T">The type of the custom attribute to search for.</typeparam>
-        /// <param name="assemblies">Assemblies which will be searched.</param>
+        /// <param name="assembly">Assembly which will be searched.</param>
         /// <param name="predicate">The predicate.</param>
-        /// <returns>Types which are decorated by custom attribute matching given predicate</returns>
-        public static IEnumerable<AttributeInstance<T>> ScanTypesForCustomAttributes<T>(this IEnumerable<Assembly> assemblies, Func<T, bool> predicate = null)
+        /// <returns>
+        /// Types which are decorated by custom attribute matching given predicate
+        /// </returns>
+        public static IEnumerable<AttributeInstance<T>> ScanTypesForCustomAttributes<T>(this Assembly assembly, Func<T, bool> predicate = null)
             where T : Attribute
         {
-            foreach (Assembly assembly in assemblies)
+            foreach (AttributeInstance<T> attributeInstance in assembly.GetTypes().ScanTypesForCustomAttributes<T>(predicate))
             {
-                foreach (AttributeInstance<T> attributeInstance in assembly.GetTypes().ScanTypesForCustomAttributes<T>(predicate))
-                {
-                    yield return attributeInstance;
-                }
+                yield return attributeInstance;
             }
         }
 

@@ -7,13 +7,25 @@ namespace GenericEntity.Abstractions
     /// </summary>
     public abstract class Field : IField
     {
-        public Field(FieldDefinition definition)
+        public Field(FieldDefinition fieldDefinition)
         {
-            this.Definition = definition;
+            this.RawSchema = fieldDefinition.RawSchema;
+            this.Name = fieldDefinition.Name;
+            this.DisplayName = fieldDefinition.DisplayName;
+            this.Description = fieldDefinition.Description;
         }
 
         /// <inheritdoc/>
-        public FieldDefinition Definition { get; }
+        public string RawSchema { get; }
+
+        /// <inheritdoc/>
+        public string Name { get; }
+
+        /// <inheritdoc/>
+        public string DisplayName { get; }
+
+        /// <inheritdoc/>
+        public string Description { get; }
 
         /// <inheritdoc/>
         public Type ValueType
@@ -60,7 +72,7 @@ namespace GenericEntity.Abstractions
     /// <typeparam name="T">The field value type</typeparam>
     public abstract class Field<T> : Field, IField<T>
     {
-        public Field(FieldDefinition definition) : base(definition)
+        public Field(FieldDefinition fieldDefinition) : base(fieldDefinition)
         {
         }
 

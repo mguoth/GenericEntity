@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
 using System.Text.Json.Serialization;
+using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace GenericEntity
 {
@@ -14,39 +16,36 @@ namespace GenericEntity
     [JsonConverter(typeof(GenericEntityConverter))]
     public partial class GenericEntity
     {
-        public static ISchemaRepository DefaultSchemaRepository { get; set; }
         private static readonly object syncRoot = new object();
-        private static readonly IDictionary<string, CompiledSchema> compiledSchemaCache = new Dictionary<string, CompiledSchema>();
-        private CompiledSchema compiledSchema;
+        private static readonly IDictionary<string, GenericSchema> compiledSchemaCache = new Dictionary<string, GenericSchema>();
 
+        private readonly GenericSchema schema;
+        private readonly ISchemaParser schemaParser;
 
-        public GenericEntity(string schema, ISchemaRepository schemaRepository)
+        public GenericEntity(SchemaInfo schemaInfo, ISchemaParser schemaParser)
         {
-            SchemaCompiler schemaCompiler = new SchemaCompiler(schemaRepository, Assembly.Load("GenericEntity.Extensions"));
+            this.SchemaInfo = schemaInfo;
+            this.schemaParser = schemaParser;
 
             lock (syncRoot)
             {
-                if (compiledSchemaCache.TryGetValue(schema, out compiledSchema))
-                {
-                    //Get from cache if exists
-                }
-                else
+                //Get from cache or create new
+                if (!compiledSchemaCache.TryGetValue(this.SchemaInfo.Uri, out schema))
                 {
                     //Compile and index into cache
-                    compiledSchema = schemaCompiler.Compile(schema);
-
-                    compiledSchemaCache[schema] = compiledSchema;
+                    schema = schemaParser.Parse(this.SchemaInfo.Payload);
+                    compiledSchemaCache[this.SchemaInfo.Uri] = schema;
                 }
             }
-
+            
             this.Fields = BuildFields();
         }
 
-        internal GenericEntity(GenericEntityDto dto, ISchemaRepository schemaRepository) : this(dto.Schema, schemaRepository)
+        internal GenericEntity(GenericEntityDto dto, SchemaInfo schemaInfo, ISchemaParser schemaParser): this(schemaInfo, schemaParser)
         {
-            foreach (var field in dto.Fields)
+            foreach (var field in dto.Data)
             {
-                if (field.Value is IJsonValueProvider jsonValueProvider)
+                if (field.Value is IFieldValueProvider jsonValueProvider)
                 {
                     //Set value provider
                     this.ImportFieldValue(this.Fields[field.Key], jsonValueProvider);
@@ -59,7 +58,9 @@ namespace GenericEntity
             }
         }
 
-        public Abstractions.Schema Schema => compiledSchema.Schema;
+        public static IGenericEntityExtensions DefaultExtensions { get; set; }
+
+        public SchemaInfo SchemaInfo { get; }
 
         /// <summary>
         /// Gets fields
@@ -69,33 +70,35 @@ namespace GenericEntity
         private FieldCollection BuildFields()
         {
             FieldCollectionBuilder builder = new FieldCollectionBuilder();
-          
-            foreach (FieldDefinition fieldDefinition in this.Schema.Fields)
+
+            foreach (FieldDefinition fieldDefinition in schema.Fields)
             {
-                IField field = this.CreateField(fieldDefinition, compiledSchema.CompilerData.FieldTypes[fieldDefinition.Type]);
+                IField field = this.CreateField(fieldDefinition);
                 builder.Add(field);
             }
 
             return builder.Build();
         }
         
-        private IField CreateField(FieldDefinition fieldDefinition, Type fieldType)
+        private IField CreateField(FieldDefinition fieldDefinition)
         {
-            IField field = (IField) fieldType.GetConstructor(new Type[] { typeof(FieldDefinition) }).Invoke(new object[] { fieldDefinition });
+            IField field = (IField) fieldDefinition.FieldType.GetConstructor(new Type[] { typeof(FieldDefinition) }).Invoke(new object[] { fieldDefinition });
             return field;
         }
 
-        private void ImportFieldValue(IField field, IJsonValueProvider jsonValueProvider)
+        private void ImportFieldValue(IField field, IFieldValueProvider fieldValueProvider)
         {
-            switch (field.Definition.Type)
+            if (field.ValueType == typeof(string))
             {
-                case "string":
-                    field.SetValue(jsonValueProvider.GetString());
-                    break;
-
-                case "integer":
-                    field.SetValue(jsonValueProvider.GetInteger());
-                    break;
+                field.SetValue(fieldValueProvider.GetString());
+            }
+            else if (field.ValueType == typeof(int))
+            {
+                field.SetValue(fieldValueProvider.GetInt32());
+            }
+            else
+            {
+                throw new NotSupportedException();
             }
         }
     }

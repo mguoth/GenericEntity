@@ -1,0 +1,82 @@
+using GenericEntity.Abstractions;
+using GenericEntity.Avro;
+using GenericEntity.Extensions;
+using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
+using System.Text.Json;
+
+namespace GenericEntity.Tests
+{
+    public class FunctionalTests
+    {
+        [Fact]
+        public void JsonSerialisation()
+        {
+            //Initialization of the schema repository
+            ISchemaRepository schemaRepository = new InMemorySchemaRepository()
+            {
+                {
+                    "address",
+                    "avro",
+                    @$"{{
+                        ""type"": ""record"",
+                        ""name"": ""Address"",
+                        ""namespace"": ""GenericEntity.Samples"",
+                        ""fields"": [
+                        {{
+                            ""name"": ""id"",
+                            ""type"": ""int"",
+                            ""displayName"": ""Id"",
+                            ""doc"": ""The unique identifier""
+                        }},
+                        {{
+                            ""name"": ""addressLine1"",
+                            ""type"": ""string"",
+                            ""displayName"": ""Address line 1""
+                        }},
+                        {{
+                            ""name"": ""city"",
+                            ""type"": ""string"",
+                            ""displayName"": ""City""
+                        }},
+                        {{
+                            ""name"": ""postalCode"",
+                            ""type"": ""string"",
+                            ""displayName"": ""Postal code""
+                        }},
+                        {{
+                            ""name"": ""country"",
+                            ""type"": ""string"",
+                            ""displayName"": ""Country""
+                        }}
+                        ]
+                    }}"
+                }
+            };
+
+            //Creating address entity
+            GenericEntityExtensions extensions = new GenericEntityExtensions();
+            extensions.RegisterGenericEntityExtensions();
+            extensions.RegisterAvro();
+            GenericEntity.DefaultExtensions = extensions;
+
+            SchemaInfo schemaInfo = schemaRepository.GetSchema("address");
+            GenericEntity address = new GenericEntity(schemaInfo, extensions.GetSchemaParser(schemaInfo.Format));
+
+            address.Fields["id"].SetValue(1);
+            address.Fields["addressLine1"].SetValue("2501 Redbud Drive");
+            address.Fields["city"].SetValue("New York");
+            address.Fields["postalCode"].SetValue("10011");
+            address.Fields["country"].SetValue("United States");
+
+            //Serialise
+            string addressJson = JsonSerializer.Serialize(address);
+
+            GenericEntity reconstructedAddress = JsonSerializer.Deserialize<GenericEntity>(addressJson);
+
+            string reconstructedAddressJson = JsonSerializer.Serialize(reconstructedAddress);
+
+            Assert.Equal(addressJson, reconstructedAddressJson);
+        }
+    }
+}

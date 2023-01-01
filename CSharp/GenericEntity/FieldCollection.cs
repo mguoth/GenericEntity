@@ -12,7 +12,7 @@ namespace GenericEntity
 
         public FieldCollection(IEnumerable<IField> fields)
         {
-            this.fields = fields.ToDictionary(x => x.Definition.Name);
+            this.fields = fields.ToDictionary(x => x.Name);
         }
 
         /// <summary>

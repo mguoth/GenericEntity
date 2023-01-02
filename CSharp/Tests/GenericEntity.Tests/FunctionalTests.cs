@@ -56,7 +56,7 @@ namespace GenericEntity.Tests
 
             //Creating address entity
             GenericEntityExtensions extensions = new GenericEntityExtensions();
-            extensions.RegisterGenericEntityExtensions();
+            extensions.AddStandard();
             extensions.RegisterAvro();
             GenericEntity.DefaultExtensions = extensions;
 

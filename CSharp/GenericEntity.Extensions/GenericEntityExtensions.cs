@@ -9,7 +9,7 @@ namespace GenericEntity.Extensions
 {
     public static class GenericEntityExtensions
     {
-        public static void RegisterGenericEntityExtensions(this IGenericEntityExtensions extensions)
+        public static void AddStandard(this IGenericEntityExtensions extensions)
         {
             extensions.RegisterExtension(Assembly.GetExecutingAssembly());
         }

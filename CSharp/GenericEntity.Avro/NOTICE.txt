@@ -1,3 +1,6 @@
+The Apache Avro NOTICE at the time of the contribution:
+
+
 Apache Avro
 Copyright 2010-2019 The Apache Software Foundation
 

@@ -27,7 +27,7 @@ namespace GenericEntity.CLI
             //Creating address entity
             GenericEntityExtensions extensions = new GenericEntityExtensions();
             extensions.RegisterAvro();
-            extensions.RegisterGenericEntityExtensions();
+            extensions.AddStandard();
             GenericEntity.DefaultExtensions = extensions;
 
             SchemaInfo schemaInfo = new FileSystemSchemaRepository("./Schemas", "avro").GetSchema(schemaId);

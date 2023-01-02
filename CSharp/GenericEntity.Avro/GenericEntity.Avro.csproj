@@ -5,7 +5,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Apache.Avro\LICENSE.txt" />
+    <None Remove="NOTICE.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Apache.Avro\LICENSE.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Apache.Avro" Version="1.11.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="NOTICE.txt" />
   </ItemGroup>
 
   <ItemGroup>

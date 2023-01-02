@@ -54,14 +54,13 @@ namespace GenericEntity.Tests
                 }
             };
 
-            //Creating address entity
-            GenericEntityExtensions extensions = new GenericEntityExtensions();
-            extensions.AddStandard();
-            extensions.RegisterAvro();
-            GenericEntity.DefaultExtensions = extensions;
+            //Adding generic entity extensions
+            GenericEntity.Extensions.AddStandard();
+            GenericEntity.Extensions.AddAvro();
 
+            //Creating address entity
             SchemaInfo schemaInfo = schemaRepository.GetSchema("address");
-            GenericEntity address = new GenericEntity(schemaInfo, extensions.GetSchemaParser(schemaInfo.Format));
+            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
 
             address.Fields["id"].SetValue(1);
             address.Fields["addressLine1"].SetValue("2501 Redbud Drive");

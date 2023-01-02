@@ -24,14 +24,13 @@ namespace GenericEntity.CLI
 
             string schemaId = args[0];
 
-            //Creating address entity
-            GenericEntityExtensions extensions = new GenericEntityExtensions();
-            extensions.RegisterAvro();
-            extensions.AddStandard();
-            GenericEntity.DefaultExtensions = extensions;
+            //Adding generic entity extensions
+            GenericEntity.Extensions.AddStandard();
+            GenericEntity.Extensions.AddAvro();
 
+            //Creating address entity
             SchemaInfo schemaInfo = new FileSystemSchemaRepository("./Schemas", "avro").GetSchema(schemaId);
-            GenericEntity address = new GenericEntity(schemaInfo, extensions.GetSchemaParser(schemaInfo.Format));
+            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
 
             PrintToConsole(address, true);
 

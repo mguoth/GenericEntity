@@ -14,7 +14,7 @@ namespace GenericEntity
         private readonly IDictionary<string, ISchemaParser> schemaParserInstances = new Dictionary<string, ISchemaParser>(StringComparer.OrdinalIgnoreCase);
         private readonly IDictionary<string, ISchemaRepository> schemaRepositoryInstances = new Dictionary<string, ISchemaRepository>(StringComparer.OrdinalIgnoreCase);
 
-        public void RegisterExtension(Assembly assembly)
+        public void AddExtension(Assembly assembly)
         {
             foreach (var item in assembly.ScanTypesForCustomAttributes<SchemaParserAttribute>())
             {

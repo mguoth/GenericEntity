@@ -9,9 +9,13 @@ namespace GenericEntity.Avro
 {
     public static class GenericEntityExtensions
     {
-        public static void RegisterAvro(this IGenericEntityExtensions extensions)
+        /// <summary>
+        /// Adds the Avro extension.
+        /// </summary>
+        /// <param name="extensions">The extensions.</param>
+        public static void AddAvro(this IGenericEntityExtensions extensions)
         {
-            extensions.RegisterExtension(Assembly.GetExecutingAssembly());
+            extensions.AddExtension(Assembly.GetExecutingAssembly());
         }
     }
 }

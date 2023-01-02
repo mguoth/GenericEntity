@@ -22,7 +22,7 @@ namespace GenericEntity
             schemaInfo.Format = dto.SchemaFormat;
             schemaInfo.Uri = dto.SchemaUri;
 
-            ISchemaParser schemaParser = ((GenericEntityExtensions) GenericEntity.DefaultExtensions).GetSchemaParser(schemaInfo.Format);
+            ISchemaParser schemaParser = ((GenericEntityExtensions) GenericEntity.Extensions).GetSchemaParser(schemaInfo.Format);
             GenericEntity genericEntity = new GenericEntity(dto, schemaInfo, schemaParser);
 
             return genericEntity;
@@ -50,7 +50,7 @@ namespace GenericEntity
             string schemaId = dto.SchemaUri.Split(new char[] { '/' }).Last();
 
             Uri uri = new Uri(dto.SchemaUri);
-            ISchemaRepository schemaRepository = ((GenericEntityExtensions) GenericEntity.DefaultExtensions).GetSchemaRepository(uri.Scheme);
+            ISchemaRepository schemaRepository = ((GenericEntityExtensions) GenericEntity.Extensions).GetSchemaRepository(uri.Scheme);
             SchemaInfo schemaInfo = schemaRepository.GetSchema(schemaId);
             return schemaInfo;
         }

@@ -11,11 +11,7 @@ namespace GenericEntity
     {
         public static IServiceCollection AddGenericEntityExtensions(this IServiceCollection services, Action<IGenericEntityExtensions> configureDelegate)
         {
-            GenericEntityExtensions extensions = new GenericEntityExtensions();
-            configureDelegate(extensions);
-
-            services.AddSingleton<IGenericEntityExtensions>(extensions);
-            GenericEntity.DefaultExtensions = extensions;
+            configureDelegate(GenericEntity.Extensions);
             return services;
         }
     }

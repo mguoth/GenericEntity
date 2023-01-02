@@ -9,9 +9,13 @@ namespace GenericEntity.Extensions
 {
     public static class GenericEntityExtensions
     {
+        /// <summary>
+        /// Adds the standard extensions.
+        /// </summary>
+        /// <param name="extensions">The extensions.</param>
         public static void AddStandard(this IGenericEntityExtensions extensions)
         {
-            extensions.RegisterExtension(Assembly.GetExecutingAssembly());
+            extensions.AddExtension(Assembly.GetExecutingAssembly());
         }
     }
 }

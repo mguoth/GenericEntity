@@ -58,7 +58,10 @@ namespace GenericEntity
             }
         }
 
-        public static IGenericEntityExtensions DefaultExtensions { get; set; }
+        /// <summary>
+        /// Gets extensions.
+        /// </summary>
+        public static IGenericEntityExtensions Extensions { get; } = new GenericEntityExtensions();
 
         public SchemaInfo SchemaInfo { get; }
 

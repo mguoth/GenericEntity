@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using GenericEntity.Abstractions;
 
 namespace GenericEntity
@@ -16,13 +17,14 @@ namespace GenericEntity
         }
 
         /// <summary>
-        /// Gets the <see cref="IField"/> with the specified field name.
+        /// Gets the <see cref="IField" /> with the specified name.
         /// </summary>
         /// <value>
         /// The <see cref="IField"/>.
         /// </value>
-        /// <param name="fieldName">Name of the field. Use field names from schema (avoid hardcoded values)</param>
+        /// <param name="fieldName">Name of the field.</param>
         /// <returns></returns>
+        /// <exception cref="System.Collections.Generic.KeyNotFoundException">@"The field name ""{fieldName}"" doesn't exist in the field collection")</exception>
         public IField this[string fieldName]
         {
             get
@@ -35,6 +37,19 @@ namespace GenericEntity
                 
                 throw new KeyNotFoundException($@"The field name ""{fieldName}"" doesn't exist in the field collection");
             }
+        }
+
+        /// <summary>
+        /// Gets the <see cref="IField" /> with the specified name.
+        /// </summary>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <param name="field">When this method returns, the field associated with the specified name, if the name is found; otherwise null.</param>
+        /// <returns>
+        /// true in case the <see cref="IField" /> with specified name exists; otherwise false
+        /// </returns>
+        public bool TryGetField(string fieldName, out IField field)
+        {
+            return this.fields.TryGetValue(fieldName, out field);
         }
 
         public IEnumerator<IField> GetEnumerator()

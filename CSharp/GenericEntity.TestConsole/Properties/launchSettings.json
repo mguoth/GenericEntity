@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "GenericEntity.TestConsole": {
-      "commandName": "Project",
-      "commandLineArgs": "Address"
-    }
-  }
-}

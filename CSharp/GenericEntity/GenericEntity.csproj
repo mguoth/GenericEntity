@@ -1,19 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="5.0.0" />
+    <Compile Remove="Interfaces\**" />
+    <EmbeddedResource Remove="Interfaces\**" />
+    <None Remove="Interfaces\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    <PackageReference Include="System.Text.Json" Version="7.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\GenericEntity.Abstractions\GenericEntity.Abstractions.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
   </ItemGroup>
 
 </Project>

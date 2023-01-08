@@ -7,27 +7,43 @@ namespace GenericEntity.Abstractions
     /// </summary>
     public abstract class Field : IField
     {
-        public Field(IFieldDefinition definition)
+        public Field(FieldDefinition fieldDefinition)
         {
-            this.Definition = definition;
+            this.RawSchema = fieldDefinition.RawSchema;
+            this.Name = fieldDefinition.Name;
+            this.DisplayName = fieldDefinition.DisplayName;
+            this.Description = fieldDefinition.Description;
+            this.Nullable = fieldDefinition.Nullable;
         }
 
         /// <inheritdoc/>
-        public IFieldDefinition Definition { get; }
+        public string RawSchema { get; }
 
         /// <inheritdoc/>
-        public Type DataType
+        public string Name { get; }
+
+        /// <inheritdoc/>
+        public string DisplayName { get; }
+
+        /// <inheritdoc/>
+        public string Description { get; }
+
+        /// <inheritdoc/>
+        public Type ValueType
         {
             get
             {
-                return this.GetDataTypeInternal();
+                return this.GetValueTypeInternal();
             }
         }
 
         /// <inheritdoc/>
-        public T Get<T>()
+        public bool Nullable { get; }
+
+        /// <inheritdoc/>
+        public TTarget GetValue<TTarget>()
         {
-            if (this is IField<T> field)
+            if (this is IField<TTarget> field)
             {
                 return field.Value;
             }
@@ -35,66 +51,27 @@ namespace GenericEntity.Abstractions
             //Try convert
             try
             {
-                return (T)Convert.ChangeType(this.GetValueInternal(), typeof(T));
+                return (TTarget) Convert.ChangeType(this.GetValueInternal(), typeof(TTarget));
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException($@"Can't convert the field value of ""{this.DataType}"" type into the ""{typeof(T)}"" return type", ex);
+                throw new InvalidOperationException($@"Can't convert the field value of ""{this.ValueType}"" type into the ""{typeof(TTarget)}"" return type", ex);
             }
         }
 
         /// <inheritdoc/>
-        public void Set<T>(T value)
+        public void SetValue<TSource>(TSource value)
         {
+            if (value == null && !Nullable)
+            {
+                throw new InvalidOperationException($@"Can't set null into not nullable field");
+            }
+
             this.SetValueInternal(value);
         }
 
-        protected abstract Type GetDataTypeInternal();
-        protected abstract void SetValueInternal<T>(T Value);
+        protected abstract Type GetValueTypeInternal();
+        protected abstract void SetValueInternal<TSource>(TSource Value);
         protected abstract object GetValueInternal();
-    }
-
-    /// <summary>
-    /// Generic base field class
-    /// </summary>
-    /// <typeparam name="T">The field value type</typeparam>
-    public abstract class Field<T> : Field, IField<T>
-    {
-        public Field(IFieldDefinition definition) : base(definition)
-        {
-        }
-
-        /// <summary>
-        /// Gets or sets the value.
-        /// </summary>
-        public T Value { get; set; }
-
-        protected sealed override Type GetDataTypeInternal()
-        {
-            return typeof(T);
-        }
-
-        protected sealed override object GetValueInternal()
-        {
-            return this.Value;
-        }
-
-        protected sealed override void SetValueInternal<TRequested>(TRequested value)
-        {
-            if (value is T castedValue)
-            {
-                this.Value = castedValue;
-                return;
-            }
-
-            try
-            {
-                this.Value = (T) Convert.ChangeType(value, typeof(T));
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException($@"Can't convert the value of ""{typeof(TRequested)}"" type into the field value of ""{typeof(T)}"" type", ex);
-            }
-        }
     }
 }

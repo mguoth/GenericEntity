@@ -10,6 +10,8 @@ namespace GenericEntity.Abstractions
         public string Name { get; set; }
         public string DisplayName { get; set; }
         public string Description { get; set; }
-        public Type FieldType { get; set; }
+        public Type ValueType { get; set; }
+        public object DefaultValue { get; set; }
+        public bool Nullable { get; set; }
     }
 }

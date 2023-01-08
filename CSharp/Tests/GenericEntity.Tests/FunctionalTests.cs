@@ -25,7 +25,7 @@ namespace GenericEntity.Tests
                         ""fields"": [
                         {{
                             ""name"": ""id"",
-                            ""type"": ""int"",
+                            ""type"": [""null"", ""int""],
                             ""displayName"": ""Id"",
                             ""doc"": ""The unique identifier""
                         }},
@@ -33,6 +33,11 @@ namespace GenericEntity.Tests
                             ""name"": ""addressLine1"",
                             ""type"": ""string"",
                             ""displayName"": ""Address line 1""
+                        }},
+                        {{
+                            ""name"": ""addressLine2"",
+                            ""type"": [""null"", ""string""],
+                            ""displayName"": ""Address line 2""
                         }},
                         {{
                             ""name"": ""city"",

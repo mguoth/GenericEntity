@@ -33,6 +33,11 @@ namespace GenericEntity.Abstractions
         Type ValueType { get; }
 
         /// <summary>
+        /// Gets a value indicating whether this <see cref="IField"/> is nullable.
+        /// </summary>
+        bool Nullable { get; }
+
+        /// <summary>
         /// Gets the value and converts it to <see cref="TTarget"/>.
         /// </summary>
         /// <typeparam name="TTarget">The target type</typeparam>

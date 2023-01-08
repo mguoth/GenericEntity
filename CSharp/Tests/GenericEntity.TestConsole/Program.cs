@@ -67,6 +67,11 @@ namespace GenericEntity.CLI
                         string value = Console.ReadLine();
                         try
                         {
+                            if (value.Equals("null", StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                value = null;
+                            }
+
                             field.SetValue(value);
                             break;
                         }
@@ -78,7 +83,7 @@ namespace GenericEntity.CLI
                 }
                 else
                 {
-                    Console.WriteLine($"{fieldRow}{field.GetValue<string>()}");
+                    Console.WriteLine($"{fieldRow}{field.GetValue<string>() ?? "null"}");
                 }
             }
 

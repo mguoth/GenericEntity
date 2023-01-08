@@ -85,7 +85,8 @@ namespace GenericEntity
         
         private IField CreateField(FieldDefinition fieldDefinition)
         {
-            IField field = (IField) fieldDefinition.FieldType.GetConstructor(new Type[] { typeof(FieldDefinition) }).Invoke(new object[] { fieldDefinition });
+            Type targetFieldType = typeof(Field<>).MakeGenericType(new Type[] { fieldDefinition.ValueType });
+            IField field = (IField)targetFieldType.GetConstructor(new Type[] { typeof(FieldDefinition) }).Invoke(new object[] { fieldDefinition });
             return field;
         }
 

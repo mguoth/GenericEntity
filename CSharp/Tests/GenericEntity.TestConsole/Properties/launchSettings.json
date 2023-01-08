@@ -2,7 +2,7 @@
   "profiles": {
     "GenericEntity.TestConsole": {
       "commandName": "Project",
-      "commandLineArgs": "Address.json"
+      "commandLineArgs": "Address.avsc"
     }
   }
 }

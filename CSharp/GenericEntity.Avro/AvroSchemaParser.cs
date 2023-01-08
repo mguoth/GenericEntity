@@ -13,7 +13,7 @@ using System.Text.Json;
 
 namespace GenericEntity.Avro
 {
-    [SchemaParser("avro")]
+    [SchemaParser("avsc")]
     public class AvroSchemaParser : ISchemaParser
     {
         /// <inheritdoc />

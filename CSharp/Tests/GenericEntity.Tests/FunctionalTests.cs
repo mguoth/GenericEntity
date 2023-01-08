@@ -17,7 +17,7 @@ namespace GenericEntity.Tests
             {
                 {
                     "address",
-                    "avro",
+                    "avsc",
                     @$"{{
                         ""type"": ""record"",
                         ""name"": ""Address"",
@@ -25,7 +25,7 @@ namespace GenericEntity.Tests
                         ""fields"": [
                         {{
                             ""name"": ""id"",
-                            ""type"": [""null"", ""int""],
+                            ""type"": ""int"",
                             ""displayName"": ""Id"",
                             ""doc"": ""The unique identifier""
                         }},
@@ -36,7 +36,7 @@ namespace GenericEntity.Tests
                         }},
                         {{
                             ""name"": ""addressLine2"",
-                            ""type"": [""null"", ""string""],
+                            ""type"": ""string"",
                             ""displayName"": ""Address line 2""
                         }},
                         {{

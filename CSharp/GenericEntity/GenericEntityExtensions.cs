@@ -44,8 +44,15 @@ namespace GenericEntity
             ISchemaParser schemaParser;
             if (!schemaParserInstances.TryGetValue(format, out schemaParser))
             {
-                schemaParser = (ISchemaParser) schemaParserRegistry[format].GetConstructor(new Type[0]).Invoke(new object[0]);
-                schemaParserInstances[format] = schemaParser;
+                if (schemaParserRegistry.TryGetValue(format, out Type schemaParserType))
+                {
+                    schemaParser = (ISchemaParser) schemaParserType.GetConstructor(new Type[0]).Invoke(new object[0]);
+                    schemaParserInstances[format] = schemaParser;
+                }
+                else
+                {
+                    throw new NotSupportedException($@"Not supported schema format ""{format}""");
+                }
             }
 
             return schemaParser;

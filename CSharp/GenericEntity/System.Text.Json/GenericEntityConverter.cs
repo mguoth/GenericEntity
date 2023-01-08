@@ -20,7 +20,7 @@ namespace GenericEntity
 
             //Override data from DTO
             schemaInfo.Format = dto.SchemaFormat;
-            schemaInfo.Uri = dto.SchemaUri;
+            schemaInfo.Uri = new Uri(dto.SchemaUri);
 
             ISchemaParser schemaParser = ((GenericEntityExtensions) GenericEntity.Extensions).GetSchemaParser(schemaInfo.Format);
             GenericEntity genericEntity = new GenericEntity(dto, schemaInfo, schemaParser);
@@ -34,7 +34,7 @@ namespace GenericEntity
             JsonSerializerOptions options)
         {
             GenericEntityDto dto = new GenericEntityDto();
-            dto.SchemaUri = objectToWrite.SchemaInfo.Uri;
+            dto.SchemaUri = objectToWrite.SchemaInfo.Uri.ToString();
             dto.SchemaFormat = objectToWrite.SchemaInfo.Format;
 
             foreach (IField field in objectToWrite.Fields)

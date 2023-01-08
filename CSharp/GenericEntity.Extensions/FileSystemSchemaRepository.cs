@@ -9,17 +9,14 @@ namespace GenericEntity.Extensions
     public class FileSystemSchemaRepository : ISchemaRepository
     {
         private readonly string baseDirectory;
-        private readonly string schemaExtension;
-        private readonly string schemaFormat;
 
         public FileSystemSchemaRepository()
         {
         }
 
-        public FileSystemSchemaRepository(string baseDirectory, string schemaFormat)
+        public FileSystemSchemaRepository(string baseDirectory)
         {
             this.baseDirectory = baseDirectory;
-            this.schemaFormat = schemaFormat;
         }
 
         /// <inheritdoc/>
@@ -28,7 +25,7 @@ namespace GenericEntity.Extensions
             string schemaFileName = string.IsNullOrEmpty(this.baseDirectory) ? id : Path.Combine(this.baseDirectory, id);
             FileInfo fileInfo = new FileInfo(schemaFileName);
 
-            return new SchemaInfo() { Id = id, Format = this.schemaFormat, Payload = File.ReadAllText(schemaFileName), Uri = new UriBuilder("file", "localhost") { Path = fileInfo.FullName }.Uri.ToString() };
+            return new SchemaInfo() { Id = id, Format = fileInfo.Extension.TrimStart(new char[] { '.' }).ToLower(), RawSchema = File.ReadAllText(schemaFileName), Uri = new UriBuilder("file", "localhost") { Path = fileInfo.FullName }.Uri };
         }
     }
 }

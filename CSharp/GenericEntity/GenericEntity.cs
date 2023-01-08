@@ -19,26 +19,23 @@ namespace GenericEntity
         private static readonly object syncRoot = new object();
         private static readonly IDictionary<string, GenericSchema> compiledSchemaCache = new Dictionary<string, GenericSchema>();
 
-        private readonly GenericSchema schema;
-        private readonly ISchemaParser schemaParser;
-
         public GenericEntity(SchemaInfo schemaInfo, ISchemaParser schemaParser)
         {
             this.SchemaInfo = schemaInfo;
-            this.schemaParser = schemaParser;
 
+            GenericSchema schema = null;
             lock (syncRoot)
             {
                 //Get from cache or create new
-                if (!compiledSchemaCache.TryGetValue(this.SchemaInfo.Uri, out schema))
+                if (!compiledSchemaCache.TryGetValue(this.SchemaInfo.Uri.ToString(), out schema))
                 {
                     //Compile and index into cache
-                    schema = schemaParser.Parse(this.SchemaInfo.Payload);
-                    compiledSchemaCache[this.SchemaInfo.Uri] = schema;
+                    schema = schemaParser.Parse(this.SchemaInfo.RawSchema);
+                    compiledSchemaCache[this.SchemaInfo.Uri.ToString()] = schema;
                 }
             }
             
-            this.Fields = BuildFields();
+            this.Fields = BuildFields(schema);
         }
 
         internal GenericEntity(GenericEntityDto dto, SchemaInfo schemaInfo, ISchemaParser schemaParser): this(schemaInfo, schemaParser)
@@ -70,7 +67,7 @@ namespace GenericEntity
         /// </summary>
         public FieldCollection Fields { get; }
 
-        private FieldCollection BuildFields()
+        private FieldCollection BuildFields(GenericSchema schema)
         {
             FieldCollectionBuilder builder = new FieldCollectionBuilder();
 

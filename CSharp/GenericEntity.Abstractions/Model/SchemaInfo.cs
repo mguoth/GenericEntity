@@ -8,7 +8,7 @@ namespace GenericEntity.Abstractions
     {
         public string Id { get; set; }
         public string Format { get; set; }
-        public string Payload { get; set; }
-        public string Uri { get; set; }
+        public string RawSchema { get; set; }
+        public Uri Uri { get; set; }
     }
 }

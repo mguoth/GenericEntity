@@ -29,7 +29,7 @@ namespace GenericEntity.CLI
             GenericEntity.Extensions.AddAvro();
 
             //Creating address entity
-            SchemaInfo schemaInfo = new FileSystemSchemaRepository("./Schemas", "avro").GetSchema(schemaId);
+            SchemaInfo schemaInfo = new FileSystemSchemaRepository("./Schemas").GetSchema(schemaId);
             GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
 
             PrintToConsole(address, true);

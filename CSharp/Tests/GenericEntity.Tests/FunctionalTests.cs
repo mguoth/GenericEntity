@@ -111,6 +111,36 @@ namespace GenericEntity.Tests
         }
 
         [Fact]
+        public void SetFieldValue_CompatibleType_Success()
+        {
+            //Creating address entity
+            SchemaInfo schemaInfo = schemaRepository.GetSchema("address");
+            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+
+            Assert.True(address.Fields.TryGetField("id", out IField field));
+            Assert.NotNull(field);
+
+            field.SetValue<long>(5);
+            
+            Assert.Equal(5, field.GetValue<int>());
+        }
+
+        [Fact]
+        public void GetFieldValue_CompatibleType_Success()
+        {
+            //Creating address entity
+            SchemaInfo schemaInfo = schemaRepository.GetSchema("address");
+            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+
+            Assert.True(address.Fields.TryGetField("id", out IField field));
+            Assert.NotNull(field);
+
+            field.SetValue(5);
+
+            Assert.Equal(5, field.GetValue<long>()); 
+        }
+
+        [Fact]
         public void SetFieldValue_IncompatibleType_ThrowException()
         {
             //Creating address entity

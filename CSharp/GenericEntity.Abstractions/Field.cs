@@ -70,6 +70,35 @@ namespace GenericEntity.Abstractions
             this.SetValueInternal(value);
         }
 
+        /// <inheritdoc/>
+        public bool TryGetValue<TTarget>(out TTarget value)
+        {
+            try
+            {
+                value = GetValue<TTarget>();
+                return true;
+            }
+            catch (Exception)
+            {
+                value = default;
+                return false;
+            }
+        }
+
+        /// <inheritdoc/>
+        public bool TrySetValue<TSource>(TSource value)
+        {
+            try
+            {
+                SetValue(value);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         protected abstract Type GetValueTypeInternal();
         protected abstract void SetValueInternal<TSource>(TSource Value);
         protected abstract object GetValueInternal();

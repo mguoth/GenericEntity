@@ -111,6 +111,63 @@ namespace GenericEntity.Tests
         }
 
         [Fact]
+        public void SetFieldValue_IncompatibleType_ThrowException()
+        {
+            //Creating address entity
+            SchemaInfo schemaInfo = schemaRepository.GetSchema("address");
+            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+
+            Assert.True(address.Fields.TryGetField("id", out IField field));
+            Assert.NotNull(field);
+
+            Assert.Throws<InvalidOperationException>(() => field.SetValue("invalid number"));
+        }
+
+        [Fact]
+        public void GetFieldValue_IncompatibleType_ThrowException()
+        {
+            //Creating address entity
+            SchemaInfo schemaInfo = schemaRepository.GetSchema("address");
+            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+
+            Assert.True(address.Fields.TryGetField("id", out IField field));
+            Assert.NotNull(field);
+
+            field.SetValue(5);
+
+            Assert.Throws<InvalidOperationException>(() => field.GetValue<DateTime>());
+        }
+
+        [Fact]
+        public void TrySetFieldValue_IncompatibleType_ReturnFalse()
+        {
+            //Creating address entity
+            SchemaInfo schemaInfo = schemaRepository.GetSchema("address");
+            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+
+            Assert.True(address.Fields.TryGetField("id", out IField field));
+            Assert.NotNull(field);
+
+            Assert.False(field.TrySetValue("invalid number"));
+        }
+
+        [Fact]
+        public void TryGetFieldValue_IncompatibleType_ReturnFalse()
+        {
+            //Creating address entity
+            SchemaInfo schemaInfo = schemaRepository.GetSchema("address");
+            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+
+            bool result = address.Fields.TryGetField("id", out IField field);
+            Assert.True(result);
+            Assert.NotNull(field);
+
+            field.SetValue(5);
+
+            Assert.False(field.TryGetValue(out DateTime value));
+        }
+
+        [Fact]
         public void JsonSerialisation()
         {
             //Creating address entity

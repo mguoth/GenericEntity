@@ -121,7 +121,7 @@ namespace GenericEntity.Tests
             Assert.NotNull(field);
 
             field.SetValue<long>(5);
-            
+
             Assert.Equal(5, field.GetValue<int>());
         }
 
@@ -135,7 +135,7 @@ namespace GenericEntity.Tests
             Assert.True(address.Fields.TryGetField("id", out IField field));
             Assert.NotNull(field);
 
-            field.SetValue(5);
+            field.SetValue<int>(5);
 
             Assert.Equal(5, field.GetValue<long>()); 
         }

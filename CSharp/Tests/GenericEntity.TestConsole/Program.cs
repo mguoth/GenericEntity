@@ -24,17 +24,16 @@ namespace GenericEntity.CLI
 
             string schemaId = args[0];
 
-            //Adding generic entity extensions
-            GenericEntity.Extensions.AddStandard();
+            //Adds the Avro extension (registers "avsc" schema parser)
             GenericEntity.Extensions.AddAvro();
 
-            //Creating address entity
-            SchemaInfo schemaInfo = new FileSystemSchemaRepository("./Schemas").GetSchema(schemaId);
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            //Creating generic entity instance
+            SchemaInfo schemaInfo = new FileSystemSchemaRepository("Schemas").GetSchema(schemaId);
+            GenericEntity genericEntity = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
 
-            PrintToConsole(address, true);
+            PrintToConsole(genericEntity, true);
 
-            PrintToConsole(address, false);
+            PrintToConsole(genericEntity, false);
         }
 
         private static void PrintToConsole(GenericEntity genericEntity, bool edit)

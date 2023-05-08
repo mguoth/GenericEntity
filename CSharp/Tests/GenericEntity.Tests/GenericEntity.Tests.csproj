@@ -10,11 +10,15 @@
   <ItemGroup>
     <None Remove="Apache.Avro\LICENSE.txt" />
     <None Remove="NOTICE.txt" />
+    <None Remove="Schemas\Address.avsc" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Apache.Avro\LICENSE.txt" />
     <Content Include="NOTICE.txt" />
+    <Content Include="Schemas\Address.avsc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

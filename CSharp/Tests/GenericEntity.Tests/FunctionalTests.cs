@@ -10,7 +10,7 @@ namespace GenericEntity.Tests
     public class FunctionalTests
     {
         //Initialization of the schema repository
-        private static readonly ISchemaRepository schemaRepository = new FileSystemSchemaRepository(@"Schemas");
+        private static readonly ISchemaRepository schemaRepository = new FileSystemSchemaRepository("Schemas");
 
         static FunctionalTests()
         {

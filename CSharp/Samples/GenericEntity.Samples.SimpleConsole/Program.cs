@@ -10,7 +10,7 @@ using GenericEntity.Avro;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace GenericEntity.CLI
+namespace GenericEntity.Samples.SimpleConsole
 {
     class Program
     {

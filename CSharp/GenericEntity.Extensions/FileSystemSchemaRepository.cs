@@ -28,15 +28,12 @@ namespace GenericEntity.Extensions
         }
 
         /// <summary>
-        /// Gets the schema URI.
+        /// Converts file path to URI.
         /// </summary>
-        /// <param name="id">The schema identifier.</param>
+        /// <param name="filePath">The file path.</param>
         /// <returns></returns>
-        public Uri GetSchemaUri(string id)
+        public Uri FilePathToUri(string filePath)
         {
-            string filePath = BuildFilePath(id);
-            FileInfo fileInfo = new FileInfo(filePath);
-
             Uri uri = null;
             try
             {
@@ -49,6 +46,7 @@ namespace GenericEntity.Extensions
             //Fix non-Unc localhost Uris
             if (uri == null || !uri.IsUnc)
             {
+                FileInfo fileInfo = new FileInfo(filePath);
                 uri = new UriBuilder("file", "localhost") { Path = fileInfo.FullName }.Uri;
             }
 
@@ -58,11 +56,37 @@ namespace GenericEntity.Extensions
             return uri;
         }
 
+        /// <summary>
+        /// Converts URI to file path.
+        /// </summary>
+        /// <param name="uri">The URI.</param>
+        /// <returns></returns>
+        public string UriToFilePath(Uri uri)
+        {
+            if (!uri.IsFile)
+            {
+                throw new NotSupportedException($@"The ""{uri}"" Uri is not a valid file schema");
+            }
+
+            string filePath;
+            if (uri.IsLoopback)
+            {
+                //Local file
+                filePath = HttpUtility.UrlDecode(uri.AbsolutePath.TrimStart('/'));
+            }
+            else
+            {
+                //Remote file
+                filePath = HttpUtility.UrlDecode(uri.AbsoluteUri);
+            }
+
+            return filePath;
+        }
+
         /// <inheritdoc/>
         public SchemaInfo GetSchema(string id)
         {
-            Uri uri = GetSchemaUri(id);
-            string filePath = BuildFilePath(id);
+            string filePath = GetSchemaFilePath(id);
             FileInfo fileInfo = new FileInfo(filePath);
 
             string rawSchema = File.ReadAllText(filePath);
@@ -72,7 +96,7 @@ namespace GenericEntity.Extensions
                 Id = id,
                 Format = fileInfo.Extension.TrimStart(new char[] { '.' }).ToLower(),
                 RawSchema = rawSchema,
-                Uri = uri
+                Uri = FilePathToUri(filePath)
             };
 
             return schemaInfo;
@@ -81,12 +105,8 @@ namespace GenericEntity.Extensions
         /// <inheritdoc/>
         public SchemaInfo GetSchema(Uri uri)
         {
-            if (!uri.IsFile)
-            {
-                throw new NotSupportedException($@"The ""{uri}"" Uri is not a valid file schema in the Unc format");
-            }
+            string filePath = UriToFilePath(uri);
 
-            string filePath = HttpUtility.UrlDecode(uri.AbsolutePath.TrimStart('/'));
             FileInfo fileInfo = new FileInfo(filePath);
 
             string rawSchema = File.ReadAllText(filePath);
@@ -102,9 +122,14 @@ namespace GenericEntity.Extensions
             return schemaInfo;
         }
 
-        private string BuildFilePath(string id)
+        /// <summary>
+        /// Gets the schema file path.
+        /// </summary>
+        /// <param name="schemaId">The schema identifier.</param>
+        /// <returns></returns>
+        public string GetSchemaFilePath(string schemaId)
         {
-            return string.IsNullOrEmpty(this.basePath) ? id : Path.Combine(this.basePath, id);
+            return string.IsNullOrEmpty(this.basePath) ? schemaId : Path.Combine(this.basePath, schemaId);
         }
     }
 }

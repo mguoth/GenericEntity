@@ -7,16 +7,16 @@ using System.Text.Json;
 
 namespace GenericEntity.Tests
 {
-    public class FunctionalTests
+    public class GenericEntityTests
     {
         //Initialization of the schema repository
         private static readonly ISchemaRepository schemaRepository = new FileSystemSchemaRepository("Schemas");
 
-        static FunctionalTests()
+        static GenericEntityTests()
         {
             //Adding generic entity extensions
-            GenericEntity.Extensions.AddStandard();
-            GenericEntity.Extensions.AddAvro();
+            global::GenericEntity.GenericEntity.Extensions.AddStandard();
+            global::GenericEntity.GenericEntity.Extensions.AddAvro();
         }
 
         [Fact]
@@ -24,7 +24,7 @@ namespace GenericEntity.Tests
         {
             //Creating address entity
             SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            global::GenericEntity.GenericEntity address = new global::GenericEntity.GenericEntity(schemaInfo, global::GenericEntity.GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
 
             IField field = address.Fields["id"];
             Assert.NotNull(field);
@@ -36,7 +36,7 @@ namespace GenericEntity.Tests
         {
             //Creating address entity
             SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            global::GenericEntity.GenericEntity address = new global::GenericEntity.GenericEntity(schemaInfo, global::GenericEntity.GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
 
             Assert.Throws<KeyNotFoundException>(() => address.Fields["nonExistingField"]);
         }
@@ -46,7 +46,7 @@ namespace GenericEntity.Tests
         {
             //Creating address entity
             SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            global::GenericEntity.GenericEntity address = new global::GenericEntity.GenericEntity(schemaInfo, global::GenericEntity.GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
 
             bool result = address.Fields.TryGetField("id", out IField field);
             Assert.True(result);
@@ -59,7 +59,7 @@ namespace GenericEntity.Tests
         {
             //Creating address entity
             SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            global::GenericEntity.GenericEntity address = new global::GenericEntity.GenericEntity(schemaInfo, global::GenericEntity.GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
 
             bool result = address.Fields.TryGetField("nonExistingField", out IField field);
             Assert.False(result);
@@ -71,7 +71,7 @@ namespace GenericEntity.Tests
         {
             //Creating address entity
             SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            global::GenericEntity.GenericEntity address = new global::GenericEntity.GenericEntity(schemaInfo, global::GenericEntity.GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
 
             Assert.True(address.Fields.TryGetField("id", out IField field));
             Assert.NotNull(field);
@@ -86,7 +86,7 @@ namespace GenericEntity.Tests
         {
             //Creating address entity
             SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            global::GenericEntity.GenericEntity address = new global::GenericEntity.GenericEntity(schemaInfo, global::GenericEntity.GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
 
             Assert.True(address.Fields.TryGetField("id", out IField field));
             Assert.NotNull(field);
@@ -101,7 +101,7 @@ namespace GenericEntity.Tests
         {
             //Creating address entity
             SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            global::GenericEntity.GenericEntity address = new global::GenericEntity.GenericEntity(schemaInfo, global::GenericEntity.GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
 
             Assert.True(address.Fields.TryGetField("id", out IField field));
             Assert.NotNull(field);
@@ -114,7 +114,7 @@ namespace GenericEntity.Tests
         {
             //Creating address entity
             SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            global::GenericEntity.GenericEntity address = new global::GenericEntity.GenericEntity(schemaInfo, global::GenericEntity.GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
 
             Assert.True(address.Fields.TryGetField("id", out IField field));
             Assert.NotNull(field);
@@ -129,7 +129,7 @@ namespace GenericEntity.Tests
         {
             //Creating address entity
             SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            global::GenericEntity.GenericEntity address = new global::GenericEntity.GenericEntity(schemaInfo, global::GenericEntity.GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
 
             Assert.True(address.Fields.TryGetField("id", out IField field));
             Assert.NotNull(field);
@@ -142,7 +142,7 @@ namespace GenericEntity.Tests
         {
             //Creating address entity
             SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            global::GenericEntity.GenericEntity address = new global::GenericEntity.GenericEntity(schemaInfo, global::GenericEntity.GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
 
             bool result = address.Fields.TryGetField("id", out IField field);
             Assert.True(result);
@@ -158,7 +158,7 @@ namespace GenericEntity.Tests
         {
             //Creating address entity
             SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            global::GenericEntity.GenericEntity address = new global::GenericEntity.GenericEntity(schemaInfo, global::GenericEntity.GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
 
             address.Fields["id"].SetValue(1);
             address.Fields["addressLine1"].SetValue("2501 Redbud Drive");
@@ -170,34 +170,11 @@ namespace GenericEntity.Tests
             string json = JsonSerializer.Serialize(address);
             
             //Deserialise
-            GenericEntity? reconstructedAddress = JsonSerializer.Deserialize<GenericEntity>(json);
+            global::GenericEntity.GenericEntity? reconstructedAddress = JsonSerializer.Deserialize<global::GenericEntity.GenericEntity>(json);
 
             string reconstructedAddressJson = JsonSerializer.Serialize(reconstructedAddress);
 
             Assert.Equal(json, reconstructedAddressJson);
-        }
-
-        [Theory]
-        [InlineData(@"Schemas", "Address.avsc", "file://localhost/{currentDirectory}/Schemas/Address.avsc")]
-        [InlineData(@"{currentDirectory}\Schemas", "Address.avsc", "file://localhost/{currentDirectory}/Schemas/Address.avsc")]
-        [InlineData(@"\\localhost\Schemas", "Address.avsc", "file://localhost/Schemas/Address.avsc")]
-        [InlineData(@"\\SKBRA-8CRS2J3\Schemas", "Address.avsc", "file://SKBRA-8CRS2J3/Schemas/Address.avsc")]
-        [InlineData(@"\\unknownserver\Schemas", "Address.avsc", "file://unknownserver/Schemas/Address.avsc")]
-        public void FileSystemSchemaRepository(string basePath, string schemaId, string expectedUri)
-        {
-            basePath = ProcessPlaceHolders(basePath);
-            schemaId = ProcessPlaceHolders(schemaId);
-            expectedUri = ProcessPlaceHolders(expectedUri);
-            Uri expectedUriObject = new Uri(expectedUri);
-
-            FileSystemSchemaRepository schemaRepository = new FileSystemSchemaRepository(basePath);
-
-            Assert.Equal(expectedUriObject, schemaRepository.GetSchemaUri(schemaId));
-        }
-
-        private string ProcessPlaceHolders(string input)
-        {
-            return input.Replace("{currentDirectory}", Directory.GetCurrentDirectory());
         }
     }
 }

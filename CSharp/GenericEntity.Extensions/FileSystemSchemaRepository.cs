@@ -41,13 +41,9 @@ namespace GenericEntity.Extensions
             }
             catch (Exception)
             {
-            }
-
-            //Fix non-Unc localhost Uris
-            if (uri == null || !uri.IsUnc)
-            {
                 FileInfo fileInfo = new FileInfo(filePath);
-                uri = new UriBuilder("file", "localhost") { Path = fileInfo.FullName }.Uri;
+                filePath = fileInfo.FullName;
+                uri = new Uri(filePath);
             }
 
             //get rid of original string as it is used in serialisers and escape it
@@ -68,19 +64,7 @@ namespace GenericEntity.Extensions
                 throw new NotSupportedException($@"The ""{uri}"" Uri is not a valid file schema");
             }
 
-            string filePath;
-            if (uri.IsLoopback)
-            {
-                //Local file
-                filePath = HttpUtility.UrlDecode(uri.AbsolutePath.TrimStart('/'));
-            }
-            else
-            {
-                //Remote file
-                filePath = HttpUtility.UrlDecode(uri.AbsoluteUri);
-            }
-
-            return filePath;
+            return uri.LocalPath;
         }
 
         /// <inheritdoc/>

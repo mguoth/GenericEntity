@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace GenericEntity.Extensions
+namespace GenericEntity.Abstractions
 {
     public static class GenericEntityExtensions
     {

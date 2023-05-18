@@ -20,7 +20,7 @@ namespace GenericEntity
 
             //Override data from DTO
             schemaInfo.Format = dto.SchemaFormat;
-            schemaInfo.Uri = new Uri(dto.SchemaUri);
+            schemaInfo.Uri = dto.SchemaUri;
 
             ISchemaParser schemaParser = ((GenericEntityExtensions) GenericEntity.Extensions).GetSchemaParser(schemaInfo.Format);
             GenericEntity genericEntity = new GenericEntity(dto, schemaInfo, schemaParser);
@@ -34,7 +34,7 @@ namespace GenericEntity
             JsonSerializerOptions options)
         {
             GenericEntityDto dto = new GenericEntityDto();
-            dto.SchemaUri = objectToWrite.SchemaInfo.Uri.ToString();
+            dto.SchemaUri = objectToWrite.SchemaInfo.Uri;
             dto.SchemaFormat = objectToWrite.SchemaInfo.Format;
 
             foreach (IField field in objectToWrite.Fields)
@@ -47,11 +47,9 @@ namespace GenericEntity
 
         private static SchemaInfo RetrieveSchemaInfo(GenericEntityDto dto)
         {
-            string schemaId = dto.SchemaUri.Split(new char[] { '/' }).Last();
+            ISchemaRepository schemaRepository = ((GenericEntityExtensions) GenericEntity.Extensions).GetSchemaRepository(dto.SchemaUri.Scheme);
 
-            Uri uri = new Uri(dto.SchemaUri);
-            ISchemaRepository schemaRepository = ((GenericEntityExtensions) GenericEntity.Extensions).GetSchemaRepository(uri.Scheme);
-            SchemaInfo schemaInfo = schemaRepository.GetSchema(schemaId);
+            SchemaInfo schemaInfo = schemaRepository.GetSchema(dto.SchemaUri);
             return schemaInfo;
         }
     }

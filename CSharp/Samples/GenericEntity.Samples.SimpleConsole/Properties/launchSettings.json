@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "GenericEntity.TestConsole": {
+    "GenericEntity.Samples.SimpleConsole": {
       "commandName": "Project",
       "commandLineArgs": "Address.avsc"
     }

@@ -10,10 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\GenericEntity.Abstractions\GenericEntity.Abstractions.csproj" />
   </ItemGroup>
 

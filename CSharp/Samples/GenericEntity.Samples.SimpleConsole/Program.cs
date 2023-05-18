@@ -10,7 +10,7 @@ using GenericEntity.Avro;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace GenericEntity.CLI
+namespace GenericEntity.Samples.SimpleConsole
 {
     class Program
     {
@@ -24,17 +24,16 @@ namespace GenericEntity.CLI
 
             string schemaId = args[0];
 
-            //Adding generic entity extensions
-            GenericEntity.Extensions.AddStandard();
+            //Adds the Avro extension (registers "avsc" schema parser)
             GenericEntity.Extensions.AddAvro();
 
-            //Creating address entity
-            SchemaInfo schemaInfo = new FileSystemSchemaRepository("./Schemas").GetSchema(schemaId);
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            //Creating generic entity instance
+            SchemaInfo schemaInfo = new FileSystemSchemaRepository("Schemas").GetSchema(schemaId);
+            GenericEntity genericEntity = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
 
-            PrintToConsole(address, true);
+            PrintToConsole(genericEntity, true);
 
-            PrintToConsole(address, false);
+            PrintToConsole(genericEntity, false);
         }
 
         private static void PrintToConsole(GenericEntity genericEntity, bool edit)
@@ -65,17 +64,17 @@ namespace GenericEntity.CLI
                         Console.Write(fieldRow);
 
                         string value = Console.ReadLine();
-                        try
-                        {
-                            if (value.Equals("null", StringComparison.InvariantCultureIgnoreCase))
-                            {
-                                value = null;
-                            }
 
-                            field.SetValue(value);
+                        if (value.Equals("null", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            value = null;
+                        }
+
+                        if (field.TrySetValue(value))
+                        {
                             break;
                         }
-                        catch (Exception exc)
+                        else
                         {
                             Console.WriteLine(@$"Can't set ""{value}"" into ""{field.ValueType}"" field type. Try again.");
                         }

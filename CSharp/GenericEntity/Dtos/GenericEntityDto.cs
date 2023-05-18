@@ -9,7 +9,7 @@ namespace GenericEntity
     {
         private IDictionary<string, object> data = new Dictionary<string, object>();
 
-        public string SchemaUri { get; set; }
+        public Uri SchemaUri { get; set; }
         public string SchemaFormat { get; set; }
 
         [JsonConverter(typeof(GenericEntityDtoFieldsConverter))]

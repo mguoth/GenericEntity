@@ -1,0 +1,33 @@
+{
+  "type": "record",
+  "name": "Address",
+  "namespace": "GenericEntity.Samples",
+  "fields": [
+    {
+      "name": "id",
+      "type": "int",
+      "displayName": "Id",
+      "doc": "The unique identifier"
+    },
+    {
+      "name": "addressLine1",
+      "type": "string",
+      "displayName": "Address line 1"
+    },
+    {
+      "name": "city",
+      "type": "string",
+      "displayName": "City"
+    },
+    {
+      "name": "postalCode",
+      "type": "string",
+      "displayName": "Postal code"
+    },
+    {
+      "name": "country",
+      "type": "string",
+      "displayName": "Country"
+    }
+  ]
+}

@@ -1,11 +1,11 @@
 ﻿using GenericModel.Data.Abstractions;
-using GenericModel.Data.Extensions;
+using GenericModel.Data.SchemaRepository.FileSystem;
 using System;
 using System.IO;
 using System.Text.Json;
 using System.Linq;
 using System.Reflection;
-using GenericModel.Data.Avro;
+using GenericModel.Data.Schema.Avro;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -24,7 +24,7 @@ namespace GenericModel.Data.Samples.SimpleConsole
             string schemaId = args[0];
 
             //Adds the Avro extension (registers "avsc" schema parser)
-            GenericEntity.Extensions.AddAvro();
+            GenericEntity.Extensions.AddAvroSchema();
 
             //Creating generic entity instance
             SchemaInfo schemaInfo = new FileSystemSchemaRepository("Schemas").GetSchema(schemaId);

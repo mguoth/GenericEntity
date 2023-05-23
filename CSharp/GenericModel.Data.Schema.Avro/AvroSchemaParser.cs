@@ -11,7 +11,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 
-namespace GenericModel.Data.Avro
+namespace GenericModel.Data.Schema.Avro
 {
     [SchemaParser("avsc")]
     public class AvroSchemaParser : ISchemaParser
@@ -19,7 +19,7 @@ namespace GenericModel.Data.Avro
         /// <inheritdoc />
         GenericSchema ISchemaParser.Parse(string rawSchema)
         {
-            RecordSchema schema = (RecordSchema) Schema.Parse(rawSchema);
+            RecordSchema schema = (RecordSchema) global::Avro.Schema.Parse(rawSchema);
 
             using (JsonDocument jsonDocument = JsonDocument.Parse(rawSchema))
             {

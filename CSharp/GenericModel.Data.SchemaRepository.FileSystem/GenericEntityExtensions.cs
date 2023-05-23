@@ -10,10 +10,10 @@ namespace GenericModel.Data.Abstractions
     public static class GenericEntityExtensions
     {
         /// <summary>
-        /// Adds the standard extensions.
+        /// Adds the file system schema repository.
         /// </summary>
         /// <param name="extensions">The extensions.</param>
-        public static void AddStandard(this IGenericEntityExtensions extensions)
+        public static void AddFileSystemSchemaRepository(this IGenericEntityExtensions extensions)
         {
             extensions.AddExtension(Assembly.GetExecutingAssembly());
         }

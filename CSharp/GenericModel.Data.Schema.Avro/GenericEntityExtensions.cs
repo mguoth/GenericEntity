@@ -10,10 +10,10 @@ namespace GenericModel.Data.Abstractions
     public static class GenericEntityExtensions
     {
         /// <summary>
-        /// Adds the Avro extension.
+        /// Adds the Avro schema.
         /// </summary>
         /// <param name="extensions">The extensions.</param>
-        public static void AddAvro(this IGenericEntityExtensions extensions)
+        public static void AddAvroSchema(this IGenericEntityExtensions extensions)
         {
             extensions.AddExtension(Assembly.GetExecutingAssembly());
         }

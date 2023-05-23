@@ -1,6 +1,6 @@
 using GenericModel.Data.Abstractions;
 using GenericModel.Data.Avro;
-using GenericModel.Data.Extensions;
+using GenericModel.Data.SchemaRepository.FileSystem;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
@@ -15,8 +15,8 @@ namespace GenericModel.Data.Tests
         static GenericEntityTests()
         {
             //Adding generic entity extensions
-            GenericEntity.Extensions.AddStandard();
-            GenericEntity.Extensions.AddAvro();
+            GenericEntity.Extensions.AddFileSystemSchemaRepository();
+            GenericEntity.Extensions.AddAvroSchema();
         }
 
         [Fact]

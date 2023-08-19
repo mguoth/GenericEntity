@@ -46,9 +46,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\GenericModel.Data.Schema.Avro\GenericModel.Entity.Schema.Avro.csproj" />
-    <ProjectReference Include="..\..\GenericModel.Data.SchemaRepository.FileSystem\GenericModel.Entity.SchemaRepository.FileSystem.csproj" />
-    <ProjectReference Include="..\..\GenericModel.Data\GenericModel.Entity.csproj" />
+    <ProjectReference Include="..\..\GenericModel.Entity.Schema.Avro\GenericModel.Entity.Schema.Avro.csproj" />
+    <ProjectReference Include="..\..\GenericModel.Entity.SchemaRepository.FileSystem\GenericModel.Entity.SchemaRepository.FileSystem.csproj" />
+    <ProjectReference Include="..\..\GenericModel.Entity\GenericModel.Entity.csproj" />
   </ItemGroup>
 
 </Project>

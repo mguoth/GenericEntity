@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GenericModel.Data.Abstractions\GenericModel.Entity.Abstractions.csproj" />
+    <ProjectReference Include="..\GenericModel.Entity.Abstractions\GenericModel.Entity.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,5 @@
 using GenericModel.Entity.Abstractions;
-using GenericModel.Entity.Avro;
+using GenericModel.Entity.Schema.Avro;
 using GenericModel.Entity.SchemaRepository.FileSystem;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;

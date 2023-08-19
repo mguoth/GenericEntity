@@ -11,7 +11,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 
-namespace Org.GenericEntity.Schema.Avro
+namespace Org.GenericEntity.Extensions.Avro
 {
     [SchemaParser("avsc")]
     public class AvroSchemaParser : ISchemaParser

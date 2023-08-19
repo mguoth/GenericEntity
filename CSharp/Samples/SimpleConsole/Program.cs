@@ -1,11 +1,11 @@
 ﻿using Org.GenericEntity.Abstractions;
-using Org.GenericEntity.SchemaRepository.FileSystem;
+using Org.GenericEntity.Extensions.FileSystem;
 using System;
 using System.IO;
 using System.Text.Json;
 using System.Linq;
 using System.Reflection;
-using Org.GenericEntity.Schema.Avro;
+using Org.GenericEntity.Extensions.Avro;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 

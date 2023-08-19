@@ -1,11 +1,11 @@
 using Org.GenericEntity.Abstractions;
-using Org.GenericEntity.Schema.Avro;
-using Org.GenericEntity.SchemaRepository.FileSystem;
+using Org.GenericEntity.Model;
+using Org.GenericEntity.Extensions.FileSystem;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
 
-namespace Org.GenericEntity.Model.Tests
+namespace UnitTests
 {
     public class GenericEntityTests
     {

@@ -1,11 +1,13 @@
-﻿using Org.GenericEntity.SchemaRepository.FileSystem;
+﻿using Org.GenericEntity.Abstractions;
+using Org.GenericEntity.Model;
+using Org.GenericEntity.Extensions.FileSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Org.GenericEntity.Model.Tests
+namespace UnitTests
 {
     public class FileSystemSchemaRepositoryTests
     {

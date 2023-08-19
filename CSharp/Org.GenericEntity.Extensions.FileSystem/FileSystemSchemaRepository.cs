@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Web;
 
-namespace Org.GenericEntity.SchemaRepository.FileSystem
+namespace Org.GenericEntity.Extensions.FileSystem
 {
     [SchemaRepository("file")]
     public class FileSystemSchemaRepository : ISchemaRepository

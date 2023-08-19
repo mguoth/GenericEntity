@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Apache.Avro\LICENSE.txt" />
+    <None Remove="NOTICE.txt" />
+    <None Remove="Schemas\Address.avsc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Apache.Avro\LICENSE.txt" />
+    <Content Include="NOTICE.txt" />
+    <Content Include="Schemas\Address.avsc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Org.GenericEntity.Model\Org.GenericEntity.Model.csproj" />
+    <ProjectReference Include="..\..\Org.GenericEntity.Schema.Avro\Org.GenericEntity.Schema.Avro.csproj" />
+    <ProjectReference Include="..\..\Org.GenericEntity.SchemaRepository.FileSystem\Org.GenericEntity.SchemaRepository.FileSystem.csproj" />
+  </ItemGroup>
+
+</Project>

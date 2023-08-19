@@ -1,6 +1,6 @@
 ﻿using Avro;
 using Avro.Generic;
-using GenericModel.Data.Abstractions;
+using GenericModel.Entity.Abstractions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 
-namespace GenericModel.Data.Schema.Avro
+namespace GenericModel.Entity.Schema.Avro
 {
     [SchemaParser("avsc")]
     public class AvroSchemaParser : ISchemaParser

@@ -7,17 +7,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DCBC567A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{E43E0E9A-A652-4228-9381-3B5E4299876D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericModel.Data", "GenericModel.Data\GenericModel.Data.csproj", "{628ACD26-0302-4C4F-9364-011A84173509}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericModel.Entity", "GenericModel.Data\GenericModel.Entity.csproj", "{628ACD26-0302-4C4F-9364-011A84173509}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericModel.Data.Abstractions", "GenericModel.Data.Abstractions\GenericModel.Data.Abstractions.csproj", "{D8349CCD-24F8-4592-B216-12DFE372A084}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericModel.Entity.Abstractions", "GenericModel.Data.Abstractions\GenericModel.Entity.Abstractions.csproj", "{D8349CCD-24F8-4592-B216-12DFE372A084}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericModel.Data.Tests", "Tests\GenericModel.Data.Tests\GenericModel.Data.Tests.csproj", "{A3C0EF16-4D80-4A26-B730-3B112F174298}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericModel.Data.Samples.SimpleConsole", "Samples\GenericModel.Data.Samples.SimpleConsole\GenericModel.Data.Samples.SimpleConsole.csproj", "{32191E2B-B843-413A-8454-88AFAED6062F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericModel.Data.SchemaRepository.FileSystem", "GenericModel.Data.SchemaRepository.FileSystem\GenericModel.Data.SchemaRepository.FileSystem.csproj", "{E605BC82-FBF0-43A5-A0BD-7C19F7A267A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericModel.Entity.SchemaRepository.FileSystem", "GenericModel.Data.SchemaRepository.FileSystem\GenericModel.Entity.SchemaRepository.FileSystem.csproj", "{E605BC82-FBF0-43A5-A0BD-7C19F7A267A8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericModel.Data.Schema.Avro", "GenericModel.Data.Schema.Avro\GenericModel.Data.Schema.Avro.csproj", "{0FEE8E28-E03F-462D-8978-6B140C213522}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericModel.Entity.Schema.Avro", "GenericModel.Data.Schema.Avro\GenericModel.Entity.Schema.Avro.csproj", "{0FEE8E28-E03F-462D-8978-6B140C213522}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

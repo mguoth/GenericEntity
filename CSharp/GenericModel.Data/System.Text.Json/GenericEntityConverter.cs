@@ -1,4 +1,4 @@
-﻿using GenericModel.Data.Abstractions;
+﻿using GenericModel.Entity.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace GenericModel.Data
+namespace GenericModel.Entity
 {
     public class GenericEntityConverter : JsonConverter<GenericEntity>
     {

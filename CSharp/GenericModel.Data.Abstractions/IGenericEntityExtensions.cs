@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
-namespace GenericModel.Data.Abstractions
+namespace GenericModel.Entity.Abstractions
 {
     public interface IGenericEntityExtensions
     {

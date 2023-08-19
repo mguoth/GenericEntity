@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GenericModel.Data.Abstractions
+namespace GenericModel.Entity.Abstractions
 {
     /// <summary>
     /// Base field class

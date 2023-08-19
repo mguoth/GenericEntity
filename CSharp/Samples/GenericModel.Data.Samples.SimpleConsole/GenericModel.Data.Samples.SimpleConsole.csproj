@@ -20,9 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\GenericModel.Data.Schema.Avro\GenericModel.Data.Schema.Avro.csproj" />
-    <ProjectReference Include="..\..\GenericModel.Data.SchemaRepository.FileSystem\GenericModel.Data.SchemaRepository.FileSystem.csproj" />
-    <ProjectReference Include="..\..\GenericModel.Data\GenericModel.Data.csproj" />
+    <ProjectReference Include="..\..\GenericModel.Data.Schema.Avro\GenericModel.Entity.Schema.Avro.csproj" />
+    <ProjectReference Include="..\..\GenericModel.Data.SchemaRepository.FileSystem\GenericModel.Entity.SchemaRepository.FileSystem.csproj" />
+    <ProjectReference Include="..\..\GenericModel.Data\GenericModel.Entity.csproj" />
   </ItemGroup>
 
 </Project>

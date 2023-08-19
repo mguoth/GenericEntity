@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
 
-namespace GenericModel.Data
+namespace GenericModel.Entity
 {
     /// <summary>
     /// Reflection extensions

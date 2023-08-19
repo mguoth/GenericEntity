@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GenericModel.Data
+namespace GenericModel.Entity
 {
     internal interface IFieldValueProvider
     {

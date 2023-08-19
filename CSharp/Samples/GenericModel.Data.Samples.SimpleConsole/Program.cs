@@ -1,15 +1,15 @@
-﻿using GenericModel.Data.Abstractions;
-using GenericModel.Data.SchemaRepository.FileSystem;
+﻿using GenericModel.Entity.Abstractions;
+using GenericModel.Entity.SchemaRepository.FileSystem;
 using System;
 using System.IO;
 using System.Text.Json;
 using System.Linq;
 using System.Reflection;
-using GenericModel.Data.Schema.Avro;
+using GenericModel.Entity.Schema.Avro;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace GenericModel.Data.Samples.SimpleConsole
+namespace GenericModel.Entity.Samples.SimpleConsole
 {
     class Program
     {

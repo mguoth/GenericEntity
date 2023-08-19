@@ -1,10 +1,10 @@
-﻿using GenericModel.Data.Abstractions;
+﻿using GenericModel.Entity.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 
-namespace GenericModel.Data.System.Text.Json
+namespace GenericModel.Entity.System.Text.Json
 {
     internal class JsonFieldValueProvider : IFieldValueProvider
     {

@@ -1,9 +1,9 @@
-﻿using GenericModel.Data.Abstractions;
+﻿using GenericModel.Entity.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GenericModel.Data
+namespace GenericModel.Entity
 {
     /// <summary>
     /// Generic field class

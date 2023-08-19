@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace GenericModel.Data.System.Text.Json
+namespace GenericModel.Entity.System.Text.Json
 {
     public class ObjectJsonConverter : JsonConverter<object>
     {

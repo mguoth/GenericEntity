@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GenericModel.Data.Abstractions
+namespace GenericModel.Entity.Abstractions
 {
     public class GenericSchema
     {

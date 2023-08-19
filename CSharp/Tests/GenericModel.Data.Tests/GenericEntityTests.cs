@@ -1,11 +1,11 @@
-using GenericModel.Data.Abstractions;
-using GenericModel.Data.Avro;
-using GenericModel.Data.SchemaRepository.FileSystem;
+using GenericModel.Entity.Abstractions;
+using GenericModel.Entity.Avro;
+using GenericModel.Entity.SchemaRepository.FileSystem;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
 
-namespace GenericModel.Data.Tests
+namespace GenericModel.Entity.Tests
 {
     public class GenericEntityTests
     {

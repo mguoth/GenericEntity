@@ -1,11 +1,11 @@
-﻿using GenericModel.Data.Abstractions;
+﻿using GenericModel.Entity.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace GenericModel.Data.Abstractions
+namespace GenericModel.Entity.Abstractions
 {
     public static class GenericEntityExtensions
     {

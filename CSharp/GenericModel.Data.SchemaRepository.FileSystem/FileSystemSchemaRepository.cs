@@ -1,4 +1,4 @@
-﻿using GenericModel.Data.Abstractions;
+﻿using GenericModel.Entity.Abstractions;
 using System;
 using System.Globalization;
 using System.IO;
@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Web;
 
-namespace GenericModel.Data.SchemaRepository.FileSystem
+namespace GenericModel.Entity.SchemaRepository.FileSystem
 {
     [SchemaRepository("file")]
     public class FileSystemSchemaRepository : ISchemaRepository

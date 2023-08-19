@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using GenericModel.Data.Abstractions;
+using GenericModel.Entity.Abstractions;
 
-namespace GenericModel.Data
+namespace GenericModel.Entity
 {
     public class FieldCollection : IEnumerable<IField>
     {

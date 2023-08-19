@@ -1,11 +1,11 @@
-﻿using GenericModel.Data.SchemaRepository.FileSystem;
+﻿using GenericModel.Entity.SchemaRepository.FileSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GenericModel.Data.Tests
+namespace GenericModel.Entity.Tests
 {
     public class FileSystemSchemaRepositoryTests
     {

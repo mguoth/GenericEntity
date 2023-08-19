@@ -1,11 +1,11 @@
-﻿using GenericModel.Data.System.Text.Json;
+﻿using GenericModel.Entity.System.Text.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace GenericModel.Data
+namespace GenericModel.Entity
 {
     public class GenericEntityDtoFieldsConverter : JsonConverter<IDictionary<string, object>>
     {

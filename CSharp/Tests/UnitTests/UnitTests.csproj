@@ -47,8 +47,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Org.GenericEntity.Model\Org.GenericEntity.Model.csproj" />
-    <ProjectReference Include="..\..\Org.GenericEntity.Schema.Avro\Org.GenericEntity.Schema.Avro.csproj" />
-    <ProjectReference Include="..\..\Org.GenericEntity.SchemaRepository.FileSystem\Org.GenericEntity.SchemaRepository.FileSystem.csproj" />
+    <ProjectReference Include="..\..\Org.GenericEntity.Schema.Avro\Org.GenericEntity.Extensions.Avro.csproj" />
+    <ProjectReference Include="..\..\Org.GenericEntity.SchemaRepository.FileSystem\Org.GenericEntity.Extensions.FileSystem.csproj" />
   </ItemGroup>
 
 </Project>

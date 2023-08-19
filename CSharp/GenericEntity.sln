@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Org.GenericEntity.Model", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Org.GenericEntity.Abstractions", "Org.GenericEntity.Abstractions\Org.GenericEntity.Abstractions.csproj", "{E2FD3A7F-D15B-4B79-8A1B-AE761A81F52D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Org.GenericEntity.Schema.Avro", "Org.GenericEntity.Schema.Avro\Org.GenericEntity.Schema.Avro.csproj", "{66F4F065-C2CC-43AF-9201-98E3044E9C9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Org.GenericEntity.Extensions.Avro", "Org.GenericEntity.Schema.Avro\Org.GenericEntity.Extensions.Avro.csproj", "{66F4F065-C2CC-43AF-9201-98E3044E9C9C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Org.GenericEntity.SchemaRepository.FileSystem", "Org.GenericEntity.SchemaRepository.FileSystem\Org.GenericEntity.SchemaRepository.FileSystem.csproj", "{93734857-3E6E-44C4-B00A-0B3D1AAD7C89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Org.GenericEntity.Extensions.FileSystem", "Org.GenericEntity.SchemaRepository.FileSystem\Org.GenericEntity.Extensions.FileSystem.csproj", "{93734857-3E6E-44C4-B00A-0B3D1AAD7C89}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "Tests\UnitTests\UnitTests.csproj", "{FDC728EA-9293-4B34-8E74-E4971CFAB14F}"
 EndProject

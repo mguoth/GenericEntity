@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Org.GenericEntity.Model
 {
-    public class AttributeInstance<TAttribute>
+    internal class AttributeInstance<TAttribute>
     {
         public AttributeInstance(Type type, TAttribute attribute)
         {

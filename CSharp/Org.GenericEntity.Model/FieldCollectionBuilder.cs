@@ -10,7 +10,7 @@ namespace Org.GenericEntity.Model
     /// <summary>
     /// Field collection builder
     /// </summary>
-    public class FieldCollectionBuilder
+    internal class FieldCollectionBuilder
     {
         private IList<IField> fields = new List<IField>();
 

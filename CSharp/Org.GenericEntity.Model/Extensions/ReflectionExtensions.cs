@@ -8,7 +8,7 @@ namespace Org.GenericEntity.Model
     /// <summary>
     /// Reflection extensions
     /// </summary>
-    public static class ReflectionExtensions
+    internal static class ReflectionExtensions
     {
         /// <summary>
         /// Scans assemblies for custom attributes.

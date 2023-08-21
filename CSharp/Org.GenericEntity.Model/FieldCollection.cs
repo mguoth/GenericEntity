@@ -7,6 +7,10 @@ using Org.GenericEntity.Abstractions;
 
 namespace Org.GenericEntity.Model
 {
+    /// <summary>
+    /// Field collection
+    /// </summary>
+    /// <seealso cref="IField" />
     public class FieldCollection : IEnumerable<IField>
     {
         private IDictionary<string, IField> fields = new Dictionary<string, IField>();

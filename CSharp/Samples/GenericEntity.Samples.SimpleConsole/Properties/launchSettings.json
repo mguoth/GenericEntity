@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "GenericEntity.Samples.SimpleConsole": {
-      "commandName": "Project",
-      "commandLineArgs": "Address.avsc"
-    }
-  }
-}

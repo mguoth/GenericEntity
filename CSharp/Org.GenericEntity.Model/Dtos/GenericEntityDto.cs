@@ -1,18 +1,28 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Principal;
 using System.Text.Json.Serialization;
 
 namespace Org.GenericEntity.Model
 {
-    internal class GenericEntityDto
+    [JsonConverter(typeof(GenericEntityDtoConverter))]
+    internal class GenericEntityDto : Dictionary<string, object>
     {
-        private IDictionary<string, object> data = new Dictionary<string, object>();
+        public IEnumerable<KeyValuePair<string, object>> Fields => this.Where(x => x.Key != "$genericEntity");
 
-        public Uri SchemaUri { get; set; }
-        public string SchemaFormat { get; set; }
-
-        [JsonConverter(typeof(GenericEntityDtoFieldsConverter))]
-        public IDictionary<string, object> Data { get => data; set => data = value; }
+        [JsonIgnore]
+        public GenericEntityInfo GenericEntityInfo
+        {
+            get
+            {
+                return (GenericEntityInfo) this["$genericEntity"];
+            }
+            set
+            {
+                this["$genericEntity"] = value;
+            }
+        }
     }
 }

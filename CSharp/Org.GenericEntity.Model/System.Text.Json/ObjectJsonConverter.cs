@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace Org.GenericEntity.Model.System.Text.Json
 {
-    public class ObjectJsonConverter : JsonConverter<object>
+    internal class ObjectJsonConverter : JsonConverter<object>
     {
         public override object Read(
             ref Utf8JsonReader reader,

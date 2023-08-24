@@ -41,7 +41,7 @@ namespace Org.GenericEntity.Model
 
         internal GenericEntity(GenericEntityDto dto, SchemaInfo schemaInfo, ISchemaParser schemaParser) : this(schemaInfo, schemaParser)
         {
-            foreach (var field in dto.Data)
+            foreach (var field in dto.Fields)
             {
                 if (field.Value is IFieldValueProvider jsonValueProvider)
                 {

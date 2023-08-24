@@ -22,8 +22,7 @@ namespace Org.GenericEntity.Model
             schemaInfo.Format = dto.GenericEntityInfo.SchemaFormat;
             schemaInfo.Uri = dto.GenericEntityInfo.SchemaUri;
 
-            ISchemaParser schemaParser = ((GenericEntityExtensions) GenericEntity.Extensions).GetSchemaParser(schemaInfo.Format);
-            GenericEntity genericEntity = new GenericEntity(dto, schemaInfo, schemaParser);
+            GenericEntity genericEntity = new GenericEntity(dto, schemaInfo);
 
             return genericEntity;
         }

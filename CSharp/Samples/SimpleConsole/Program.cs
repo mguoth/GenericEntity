@@ -28,7 +28,7 @@ namespace Org.GenericEntity.Model.Samples.SimpleConsole
 
             //Creating generic entity instance
             SchemaInfo schemaInfo = new FileSystemSchemaRepository("Schemas").GetSchema(schemaId);
-            GenericEntity genericEntity = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            GenericEntity genericEntity = new GenericEntity(schemaInfo);
 
             PrintToConsole(genericEntity, true);
 

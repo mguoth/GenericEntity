@@ -20,9 +20,15 @@ namespace Org.GenericEntity.Model
         private static readonly object syncRoot = new object();
         private static readonly IDictionary<string, GenericSchema> compiledSchemaCache = new Dictionary<string, GenericSchema>();
 
-        public GenericEntity(SchemaInfo schemaInfo, ISchemaParser schemaParser)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenericEntity"/> class.
+        /// </summary>
+        /// <param name="schemaInfo">The schema information.</param>
+        public GenericEntity(SchemaInfo schemaInfo)
         {
             SchemaInfo = schemaInfo;
+
+            ISchemaParser schemaParser = Extensions.GetSchemaParser(schemaInfo.Format);
 
             GenericSchema schema = null;
             lock (syncRoot)
@@ -39,7 +45,7 @@ namespace Org.GenericEntity.Model
             Fields = BuildFields(schema);
         }
 
-        internal GenericEntity(GenericEntityDto dto, SchemaInfo schemaInfo, ISchemaParser schemaParser) : this(schemaInfo, schemaParser)
+        internal GenericEntity(GenericEntityDto dto, SchemaInfo schemaInfo) : this(schemaInfo)
         {
             foreach (var field in dto.Fields)
             {
@@ -61,6 +67,9 @@ namespace Org.GenericEntity.Model
         /// </summary>
         public static IGenericEntityExtensions Extensions { get; } = new GenericEntityExtensions();
 
+        /// <summary>
+        /// Gets the schema information.
+        /// </summary>
         public SchemaInfo SchemaInfo { get; }
 
         /// <summary>

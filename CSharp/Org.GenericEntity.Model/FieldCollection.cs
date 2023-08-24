@@ -15,6 +15,10 @@ namespace Org.GenericEntity.Model
     {
         private IDictionary<string, IField> fields = new Dictionary<string, IField>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FieldCollection"/> class.
+        /// </summary>
+        /// <param name="fields">The fields.</param>
         public FieldCollection(IEnumerable<IField> fields)
         {
             this.fields = fields.ToDictionary(x => x.Name);
@@ -28,7 +32,7 @@ namespace Org.GenericEntity.Model
         /// </value>
         /// <param name="fieldName">Name of the field.</param>
         /// <returns></returns>
-        /// <exception cref="System.Collections.Generic.KeyNotFoundException">@"The field name ""{fieldName}"" doesn't exist in the field collection")</exception>
+        /// <exception cref="KeyNotFoundException">@"The field name ""{fieldName}"" doesn't exist in the field collection")</exception>
         public IField this[string fieldName]
         {
             get
@@ -56,11 +60,17 @@ namespace Org.GenericEntity.Model
             return this.fields.TryGetValue(fieldName, out field);
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through the collection.
+        /// </summary>
         public IEnumerator<IField> GetEnumerator()
         {
             return this.fields.Values.GetEnumerator();
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();

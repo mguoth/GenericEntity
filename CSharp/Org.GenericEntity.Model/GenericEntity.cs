@@ -28,7 +28,7 @@ namespace Org.GenericEntity.Model
         {
             SchemaInfo = schemaInfo;
 
-            ISchemaParser schemaParser = Extensions.GetSchemaParser(schemaInfo.Format);
+            ISchemaParser schemaParser = ((GenericEntityExtensions) Extensions).GetSchemaParser(schemaInfo.Format);
 
             GenericSchema schema = null;
             lock (syncRoot)

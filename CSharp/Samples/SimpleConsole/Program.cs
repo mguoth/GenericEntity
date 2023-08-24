@@ -27,7 +27,8 @@ namespace Org.GenericEntity.Model.Samples.SimpleConsole
             GenericEntity.Extensions.AddAvroSchema();
 
             //Creating generic entity instance
-            SchemaInfo schemaInfo = new FileSystemSchemaRepository("Schemas").GetSchema(schemaId);
+            ISchemaRepository schemaRepository = new FileSystemSchemaRepository("Schemas");
+            SchemaInfo schemaInfo = schemaRepository.GetSchema(schemaId);
             GenericEntity genericEntity = new GenericEntity(schemaInfo);
 
             PrintToConsole(genericEntity, true);

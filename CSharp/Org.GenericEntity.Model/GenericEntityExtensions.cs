@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Org.GenericEntity.Model
 {
-    public class GenericEntityExtensions : IGenericEntityExtensions
+    internal class GenericEntityExtensions : IGenericEntityExtensions
     {
         private readonly IDictionary<string, Type> schemaParserRegistry = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
         private readonly IDictionary<string, Type> schemaRepositoryRegistry = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);

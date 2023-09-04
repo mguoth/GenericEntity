@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 
 namespace Org.GenericEntity.Model
 {
-    public class GenericEntityConverter : JsonConverter<GenericEntity>
+    internal class GenericEntityConverter : JsonConverter<GenericEntity>
     {
         public override GenericEntity Read(
             ref Utf8JsonReader reader,
@@ -19,11 +19,10 @@ namespace Org.GenericEntity.Model
             SchemaInfo schemaInfo = RetrieveSchemaInfo(dto);
 
             //Override data from DTO
-            schemaInfo.Format = dto.SchemaFormat;
-            schemaInfo.Uri = dto.SchemaUri;
+            schemaInfo.Format = dto.GenericEntityInfo.SchemaFormat;
+            schemaInfo.Uri = dto.GenericEntityInfo.SchemaUri;
 
-            ISchemaParser schemaParser = ((GenericEntityExtensions) GenericEntity.Extensions).GetSchemaParser(schemaInfo.Format);
-            GenericEntity genericEntity = new GenericEntity(dto, schemaInfo, schemaParser);
+            GenericEntity genericEntity = new GenericEntity(dto, schemaInfo);
 
             return genericEntity;
         }
@@ -34,22 +33,23 @@ namespace Org.GenericEntity.Model
             JsonSerializerOptions options)
         {
             GenericEntityDto dto = new GenericEntityDto();
-            dto.SchemaUri = objectToWrite.SchemaInfo.Uri;
-            dto.SchemaFormat = objectToWrite.SchemaInfo.Format;
+            dto.GenericEntityInfo = new GenericEntityInfo();
+            dto.GenericEntityInfo.SchemaUri = objectToWrite.SchemaInfo.Uri;
+            dto.GenericEntityInfo.SchemaFormat = objectToWrite.SchemaInfo.Format;
 
             foreach (IField field in objectToWrite.Fields)
             {
-                dto.Data.Add(field.Name, field.GetValue<object>());
+                dto.Add(field.Name, field.GetValue<object>());
             }
 
-            JsonSerializer.Serialize(writer, dto, dto.GetType(), options);
+            JsonSerializer.Serialize(writer, dto, dto.GetType(), new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
         }
 
         private static SchemaInfo RetrieveSchemaInfo(GenericEntityDto dto)
         {
-            ISchemaRepository schemaRepository = ((GenericEntityExtensions) GenericEntity.Extensions).GetSchemaRepository(dto.SchemaUri.Scheme);
+            ISchemaRepository schemaRepository = ((GenericEntityExtensions) GenericEntity.Extensions).GetSchemaRepository(dto.GenericEntityInfo.SchemaUri.Scheme);
 
-            SchemaInfo schemaInfo = schemaRepository.GetSchema(dto.SchemaUri);
+            SchemaInfo schemaInfo = schemaRepository.GetSchema(dto.GenericEntityInfo.SchemaUri);
             return schemaInfo;
         }
     }

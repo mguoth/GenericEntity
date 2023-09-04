@@ -7,11 +7,11 @@ using System.Text.Json.Serialization;
 
 namespace Org.GenericEntity.Model
 {
-    public class GenericEntityDtoFieldsConverter : JsonConverter<IDictionary<string, object>>
+    internal class GenericEntityDtoConverter : JsonConverter<GenericEntityDto>
     {
-        private readonly static ObjectJsonConverter valueConverter = new ObjectJsonConverter();
+        private readonly static ObjectJsonConverter ValueConverter = new ObjectJsonConverter();
 
-        public override IDictionary<string, object> Read(
+        public override GenericEntityDto Read(
             ref Utf8JsonReader reader,
             Type typeToConvert,
             JsonSerializerOptions options)
@@ -21,7 +21,7 @@ namespace Org.GenericEntity.Model
                 throw new JsonException();
             }
 
-            var dictionary = new Dictionary<string, object>();
+            var dictionary = new GenericEntityDto();
 
             while (reader.Read())
             {
@@ -35,19 +35,19 @@ namespace Org.GenericEntity.Model
                 {
                     throw new JsonException();
                 }
-
                 string propertyName = reader.GetString();
 
                 // Get the value.
                 object value;
-                if (valueConverter != null)
+                if (propertyName == "$genericEntity")
                 {
                     reader.Read();
-                    value = valueConverter.Read(ref reader, typeof(object), options);
+                    value = JsonSerializer.Deserialize<GenericEntityInfo>(ref reader, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
                 }
                 else
                 {
-                    value = JsonSerializer.Deserialize<object>(ref reader, options);
+                    reader.Read();
+                    value = ValueConverter.Read(ref reader, typeof(object), options);
                 }
 
                 // Add to dictionary.
@@ -59,8 +59,8 @@ namespace Org.GenericEntity.Model
 
         public override void Write(
             Utf8JsonWriter writer,
-            IDictionary<string, object> objectToWrite,
+            GenericEntityDto objectToWrite,
             JsonSerializerOptions options) =>
-            JsonSerializer.Serialize(writer, objectToWrite, objectToWrite.GetType(), options);
+            JsonSerializer.Serialize(writer, objectToWrite, typeof(IDictionary<string, object>), options);
     }
 }

@@ -4,6 +4,7 @@ using Org.GenericEntity.Extensions.FileSystem;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
+using UnitTests.Models;
 
 namespace UnitTests
 {
@@ -19,12 +20,13 @@ namespace UnitTests
             GenericEntity.Extensions.AddAvroSchema();
         }
 
+        private SchemaInfo AddressSchema { get; } = schemaRepository.GetSchema("Address.avsc");
+
         [Fact]
         public void GetField_Exists_ReturnField()
         {
             //Creating address entity
-            SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            GenericEntity address = new GenericEntity(AddressSchema);
 
             IField field = address.Fields["id"];
             Assert.NotNull(field);
@@ -35,8 +37,7 @@ namespace UnitTests
         public void GetField_NotExists_ThrowException()
         {
             //Creating address entity
-            SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            GenericEntity address = new GenericEntity(AddressSchema);
 
             Assert.Throws<KeyNotFoundException>(() => address.Fields["nonExistingField"]);
         }
@@ -45,8 +46,7 @@ namespace UnitTests
         public void TryGetField_Exists_ReturnField()
         {
             //Creating address entity
-            SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            GenericEntity address = new GenericEntity(AddressSchema);
 
             bool result = address.Fields.TryGetField("id", out IField field);
             Assert.True(result);
@@ -58,8 +58,7 @@ namespace UnitTests
         public void TryGetField_NotExists_ReturnNull()
         {
             //Creating address entity
-            SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            GenericEntity address = new GenericEntity(AddressSchema);
 
             bool result = address.Fields.TryGetField("nonExistingField", out IField field);
             Assert.False(result);
@@ -70,8 +69,7 @@ namespace UnitTests
         public void SetFieldValue_CompatibleType_Success()
         {
             //Creating address entity
-            SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            GenericEntity address = new GenericEntity(AddressSchema);
 
             Assert.True(address.Fields.TryGetField("id", out IField field));
             Assert.NotNull(field);
@@ -85,8 +83,7 @@ namespace UnitTests
         public void GetFieldValue_CompatibleType_Success()
         {
             //Creating address entity
-            SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            GenericEntity address = new GenericEntity(AddressSchema);
 
             Assert.True(address.Fields.TryGetField("id", out IField field));
             Assert.NotNull(field);
@@ -100,8 +97,7 @@ namespace UnitTests
         public void SetFieldValue_IncompatibleType_ThrowException()
         {
             //Creating address entity
-            SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            GenericEntity address = new GenericEntity(AddressSchema);
 
             Assert.True(address.Fields.TryGetField("id", out IField field));
             Assert.NotNull(field);
@@ -113,8 +109,7 @@ namespace UnitTests
         public void GetFieldValue_IncompatibleType_ThrowException()
         {
             //Creating address entity
-            SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            GenericEntity address = new GenericEntity(AddressSchema);
 
             Assert.True(address.Fields.TryGetField("id", out IField field));
             Assert.NotNull(field);
@@ -128,8 +123,7 @@ namespace UnitTests
         public void TrySetFieldValue_IncompatibleType_ReturnFalse()
         {
             //Creating address entity
-            SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            GenericEntity address = new GenericEntity(AddressSchema);
 
             Assert.True(address.Fields.TryGetField("id", out IField field));
             Assert.NotNull(field);
@@ -142,7 +136,7 @@ namespace UnitTests
         {
             //Creating address entity
             SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            GenericEntity address = new GenericEntity(AddressSchema);
 
             bool result = address.Fields.TryGetField("id", out IField field);
             Assert.True(result);
@@ -158,7 +152,7 @@ namespace UnitTests
         {
             //Creating address entity
             SchemaInfo schemaInfo = schemaRepository.GetSchema("Address.avsc");
-            GenericEntity address = new GenericEntity(schemaInfo, GenericEntity.Extensions.GetSchemaParser(schemaInfo.Format));
+            GenericEntity address = new GenericEntity(AddressSchema);
 
             address.Fields["id"].SetValue(1);
             address.Fields["addressLine1"].SetValue("2501 Redbud Drive");
@@ -175,6 +169,26 @@ namespace UnitTests
             string reconstructedAddressJson = JsonSerializer.Serialize(reconstructedAddress);
 
             Assert.Equal(json, reconstructedAddressJson);
+        }
+
+        [Fact]
+        public void FromObjectToObject_ScalarFields_Ok()
+        {
+            //Creating address model
+            Address address = new Address();
+            address.Id = 1;
+            address.AddressLine1 = "2501 Redbud Drive";
+            address.City = "New York";
+            address.PostalCode = "10011";
+            address.Country = "United States";
+
+            GenericEntity genericEntity = GenericEntity.FromObject(AddressSchema, address, new ConverterOptions() { FieldNameCaseInsensitive = true });
+            Address reconstructedAddress = genericEntity.ToObject<Address>(new ConverterOptions() { FieldNameCaseInsensitive = true });
+
+            string addressJson = JsonSerializer.Serialize(address);
+            string reconstructedAddressJson = JsonSerializer.Serialize(reconstructedAddress);
+
+            Assert.Equal(addressJson, reconstructedAddressJson);
         }
     }
 }

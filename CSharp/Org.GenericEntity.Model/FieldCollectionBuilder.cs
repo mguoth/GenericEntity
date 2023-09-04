@@ -14,9 +14,14 @@ namespace Org.GenericEntity.Model
     {
         private IList<IField> fields = new List<IField>();
 
-        public FieldCollection Build()
+        /// <summary>
+        /// Builds field collection.
+        /// </summary>
+        /// <param name="caseInsensitive">Determines whether a field name is case insensitive</param>
+        /// <returns></returns>
+        public FieldCollection Build(bool caseInsensitive)
         {
-            return new FieldCollection(this.fields);
+            return new FieldCollection(this.fields, caseInsensitive);
         }
 
         /// <summary>

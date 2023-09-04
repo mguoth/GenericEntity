@@ -13,16 +13,31 @@ namespace Org.GenericEntity.Model
     /// <seealso cref="IField" />
     public class FieldCollection : IEnumerable<IField>
     {
-        private IDictionary<string, IField> fields = new Dictionary<string, IField>();
+        private readonly IDictionary<string, IField> fields;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FieldCollection"/> class.
+        /// Initializes a new instance of the <see cref="FieldCollection" /> class.
         /// </summary>
         /// <param name="fields">The fields.</param>
-        public FieldCollection(IEnumerable<IField> fields)
+        /// <param name="caseInsensitive">Determines whether a field name is case insensitive</param>
+        internal FieldCollection(IEnumerable<IField> fields, bool caseInsensitive)
         {
-            this.fields = fields.ToDictionary(x => x.Name);
+            this.CaseInsensitive = caseInsensitive;
+
+            if (caseInsensitive)
+            {
+                this.fields = fields.ToDictionary(x => x.Name, StringComparer.OrdinalIgnoreCase);
+            }
+            else
+            {
+                this.fields = fields.ToDictionary(x => x.Name);
+            }
         }
+
+        /// <summary>
+        /// Gets a value indicating whether field name is case insensitive.
+        /// </summary>
+        public bool CaseInsensitive { get; }
 
         /// <summary>
         /// Gets the <see cref="IField" /> with the specified name.
@@ -45,6 +60,32 @@ namespace Org.GenericEntity.Model
                 
                 throw new KeyNotFoundException($@"The field name ""{fieldName}"" doesn't exist in the field collection");
             }
+        }
+
+        /// <summary>
+        /// Returns this instance in case it is case sensitive, otherwise returns case sensitive wrapper for this instance.
+        /// </summary>
+        /// <returns></returns>
+        internal FieldCollection AsCaseSensitive()
+        {
+            if (!this.CaseInsensitive)
+            {
+                return this;
+            }
+            return new FieldCollection(this, false);
+        }
+
+        /// <summary>
+        /// Returns this instance in case it is case insensitive, otherwise returns case insensitive wrapper for this instanc.
+        /// </summary>
+        /// <returns></returns>
+        internal FieldCollection AsCaseInsensitive()
+        {
+            if (this.CaseInsensitive)
+            {
+                return this;
+            }
+            return new FieldCollection(this, true);
         }
 
         /// <summary>

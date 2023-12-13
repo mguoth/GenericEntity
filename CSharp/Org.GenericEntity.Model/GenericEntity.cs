@@ -116,17 +116,15 @@ namespace Org.GenericEntity.Model
         /// <returns></returns>
         public static GenericEntity FromObject(SchemaInfo schemaInfo, object obj, ConverterOptions options = null)
         {
-            using (Stream stream = new MemoryStream())
-            {
-                JsonSerializer.Serialize(stream, obj);
+            //serialise object into JSON
+            JsonObject document = (JsonObject) JsonSerializer.SerializeToNode(obj);
+            
+            //patch json with genericEntity meta data
+            document["$genericEntity"] = JsonSerializer.SerializeToNode(new GenericEntityInfo() { SchemaUri = schemaInfo.Uri, SchemaFormat = schemaInfo.Format });
 
-                JsonObject document = (JsonObject) JsonSerializer.SerializeToNode(obj);
-                document["$genericEntity"] = JsonSerializer.SerializeToNode(new GenericEntityInfo() { SchemaUri = schemaInfo.Uri, SchemaFormat = schemaInfo.Format });
-
-                //reset stream position
-                GenericEntity genericEntity = JsonSerializer.Deserialize<GenericEntity>(document, (options == null) ? null : new JsonSerializerOptions() { PropertyNameCaseInsensitive = options.FieldNameCaseInsensitive });
-                return genericEntity;
-            }
+            //deserialise patched json into generic entity
+            GenericEntity genericEntity = JsonSerializer.Deserialize<GenericEntity>(document, (options == null) ? null : new JsonSerializerOptions() { PropertyNameCaseInsensitive = options.FieldNameCaseInsensitive });
+            return genericEntity;
         }
 
         /// <summary>
